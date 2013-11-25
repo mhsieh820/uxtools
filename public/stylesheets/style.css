@@ -7771,20 +7771,21 @@ body {
 .highlight, .important {
   /* 	background-color: #FFFF88;  */
   border: 2px solid #f7cb65;
-  padding: 2px 0;
+  padding: 1px 0;
+  margin-left: -2px;
 }
 
-/* line 60, ../scss/_main.scss */
+/* line 61, ../scss/_main.scss */
 .important {
   border-color: #ea5436;
 }
 
-/* line 64, ../scss/_main.scss */
+/* line 65, ../scss/_main.scss */
 #main {
   float: left;
   width: 100%;
 }
-/* line 68, ../scss/_main.scss */
+/* line 69, ../scss/_main.scss */
 #main h2 {
   font-size: 1rem;
   padding-left: 25px;
@@ -7798,101 +7799,101 @@ body {
   text-align: center;
   margin-top: 0px;
 }
-/* line 80, ../scss/_main.scss */
+/* line 81, ../scss/_main.scss */
 #main h2.title {
   text-align: left;
 }
-/* line 85, ../scss/_main.scss */
+/* line 86, ../scss/_main.scss */
 #main h4 {
   font-size: 1rem;
   text-transform: uppercase;
   margin-top: 0px;
 }
-/* line 92, ../scss/_main.scss */
+/* line 93, ../scss/_main.scss */
 #main .padding {
   padding: 15px 35px;
 }
-/* line 97, ../scss/_main.scss */
+/* line 98, ../scss/_main.scss */
 #main .keyword-list li {
   margin-left: 0px;
   line-height: 1.2em;
 }
-/* line 101, ../scss/_main.scss */
+/* line 102, ../scss/_main.scss */
 #main .keyword-list li.second {
   margin-left: 50%;
 }
-/* line 105, ../scss/_main.scss */
+/* line 106, ../scss/_main.scss */
 #main .keyword-list li.reset {
   margin-top: -6em;
 }
-/* line 109, ../scss/_main.scss */
+/* line 110, ../scss/_main.scss */
 #main .keyword-list li span {
   display: inline-block;
   width: 50%;
 }
-/* line 112, ../scss/_main.scss */
+/* line 113, ../scss/_main.scss */
 #main .keyword-list li span.first {
   width: 50%;
 }
 
-/* line 124, ../scss/_main.scss */
+/* line 125, ../scss/_main.scss */
 .article {
   border-top: 1px solid #dadbdb;
   padding: 10px 20px;
 }
-/* line 127, ../scss/_main.scss */
+/* line 128, ../scss/_main.scss */
 .article .title {
   margin-bottom: 10px;
 }
-/* line 129, ../scss/_main.scss */
+/* line 130, ../scss/_main.scss */
 .article .title .type {
   text-transform: uppercase;
   font-weight: bold;
   display: inline-block;
   margin-right: 5px;
 }
-/* line 136, ../scss/_main.scss */
+/* line 137, ../scss/_main.scss */
 .article .title .date {
   color: #bfbfbf;
 }
-/* line 141, ../scss/_main.scss */
+/* line 142, ../scss/_main.scss */
 .article label {
   font-weight: bold;
   font-size: 0.92857rem;
 }
-/* line 146, ../scss/_main.scss */
+/* line 147, ../scss/_main.scss */
 .article p {
   margin-bottom: 0px;
 }
 
-/* line 153, ../scss/_main.scss */
+/* line 154, ../scss/_main.scss */
 #leftnav {
   background: #58595b;
 }
-/* line 156, ../scss/_main.scss */
+/* line 157, ../scss/_main.scss */
 #leftnav #nav {
   color: #FFF;
   padding: 0;
 }
-/* line 159, ../scss/_main.scss */
+/* line 160, ../scss/_main.scss */
 #leftnav #nav li {
   list-style: none;
   margin: 0;
 }
-/* line 162, ../scss/_main.scss */
+/* line 163, ../scss/_main.scss */
 #leftnav #nav li a {
   text-transform: uppercase;
   padding: 10px 15px 10px 40px;
 }
-/* line 168, ../scss/_main.scss */
+/* line 169, ../scss/_main.scss */
 #leftnav #nav > li {
   border-top: 1px solid #626366;
 }
-/* line 172, ../scss/_main.scss */
+/* line 173, ../scss/_main.scss */
 #leftnav #nav .inner-nav {
   margin-left: 0px;
 }
-/* line 174, ../scss/_main.scss */
+/* line 175, ../scss/_main.scss */
 #leftnav #nav .inner-nav li {
   padding-left: 1.25rem;
   border-top: 1px solid #626366;

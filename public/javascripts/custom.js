@@ -99,6 +99,7 @@ $j(document).ready(function () {
 	$j(".internalsearch").on("keyup", testInternalHighlight);
 	
 	$j(".internalsearch").focus(function () {
+			$j("#keyword-list .selectable").removeClass("highlight");
 			testInternalHighlight();			
 	});
 	
@@ -113,6 +114,7 @@ $j(document).ready(function () {
 	$j(".externalsearch").on("keyup", testExternalHighlight);
 	
 	$j(".externalsearch").focus(function () {
+			$j("#keyword-list .selectable").removeClass("highlight");
 			testExternalHighlight();	
 	});	
 
@@ -122,6 +124,14 @@ $j(document).ready(function () {
 			{
 				doSearchUpdate(word, 'external');
 			}	
+	});
+	
+	$j("#keyword-list").on("click", ".selectable", function () {
+		$j("#keyword-list .selectable").removeClass("highlight");
+		$j(this).addClass("highlight");
+		var word = $j(this).attr("data-word");
+		doSearchUpdate(word, 'internal');
+		doSearchUpdate(word, 'external');
 	});
 
 	//finish
