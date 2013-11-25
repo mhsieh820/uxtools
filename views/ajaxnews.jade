@@ -1,0 +1,17 @@
+each article, i in articles
+					div.large-12.columns.article
+						div.title
+							span.type #{article.type}
+							span.date #{article.content_date}
+						div.content
+							a(href='#', data-reveal-id='content_#{article._id}')
+								label #{article.title}
+							p.excerpt #{article.excerpt} ...
+							div(id='content_#{article._id}', class='reveal-modal', data-reveal)
+								div.article
+									h4 #{article.title}
+									div.title
+										span.type #{article.type}
+										span.date #{article.content_date}
+									p.fullcontent #{article.content}
+									a.close-reveal-modal &#215;

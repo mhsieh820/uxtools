@@ -1,0 +1,102 @@
+extends layout
+
+
+block content
+	ul(class='small-block-grid-2')
+		li
+			h2.title KEYWORDS
+			div.padding
+				//create some user list	
+				dl#date-selection(class='sub-nav')
+					dd.active
+						a(href='#', date-selection='today') today
+					dd
+						a(href='#', date-selection='week') past week
+					dd
+						a(href='#', date-selection='month') past month
+					dd
+						a(href='#', date-selection='year') past year
+					dd
+						a(href='#') custom
+				div.hidden
+					form#formChangeDate(class="form",name="changeDate",method="post",action="#{path}")
+						input#startDate(class="small-6", type="date", name="startDate")
+						input#endDate(class="small-6", type="date", name="endDate")
+						button#btnDateSubmit(type="submit") submit	
+				hr
+				h4 TOP MATCHING KEYWORDS
+				ol#keyword-list(class='keyword-list')
+					each word, i in word_count
+						if i < 5
+							li(id="#{word._id}", class="small-6") 
+								span.first #{word._id}
+								span #{word.value} hits
+						else if i == 5
+							li(id="#{word._id}", class="second reset small-6") 
+								span.first #{word._id}
+								span #{word.value} hits
+						else
+							li(id="#{word._id}", class="second small-6") 
+								span.first #{word._id}
+								span #{word.value} hits
+						
+				hr
+				h4 SEARCH KEYWORDS
+				form
+					div#internal-search(class='row')
+						div.small-4.columns
+							select(name='first-source')
+								option(value='internal') Internal
+								option(value='external') External
+						div.small-3.columns
+							input(class='internalsearch searchinput', type='text', name='internalsearch[]')
+						div.small-3.columns
+							input(class='internalsearch searchinput2', type='text', name='internalsearch[]')
+						div.small-2.columns
+							input(type='button', class='button tiny', value='+')
+					div#external-search(class='row')
+						div.small-4.columns
+							select(name='second-source')
+								option(value='external') External
+								option(value='internal') Internal					
+						div.small-3.columns
+							input(class='externalsearch searchinput', type='text', name='externalsearch[]')
+						div.small-3.columns
+							input(class='externalsearch searchinput2', type='text', name='externalsearch[]')
+						div.small-2.columns
+							input(type='button', class='button tiny', value='+')
+					
+		li
+			h2 &nbsp;
+			img(src='http://placehold.it/500x300')
+		li#external-news
+			h2 RELATED EXTERNAL NEWS AND INFORMATION
+			div.padding
+				each article, i in external
+					div.large-12.columns.article 
+						div.title
+							span.type #{article.type}
+							span.date #{article.content_date}
+						div.content
+							label #{article.title}
+							p #{article.excerpt}
+		li#internal-news
+			h2 INTERNAL NEWS
+			div.padding
+				each article, i in internal
+					div.large-12.columns.article
+						div.title
+							span.type #{article.type}
+							span.date #{article.content_date}
+						div.content
+							a(href='#', data-reveal-id='content_#{article._id}')
+								label #{article.title}
+							p.excerpt #{article.excerpt} ...
+							div(id='content_#{article._id}', class='reveal-modal', data-reveal)
+								div.article
+									h4 #{article.title}
+									div.title
+										span.type #{article.type}
+										span.date #{article.content_date}
+									p.fullcontent #{article.content}
+									a.close-reveal-modal &#215;

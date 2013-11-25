@@ -1,0 +1,15 @@
+extends layout
+
+block content
+	h1.
+		User List
+	div#values
+		div#userlist
+			each user, i in userlist
+				div.item(id="#{user._id}")
+					a(href="mailto:#{user.email}")= user.username
+	
+	form#formAddUser(name="adduser",method="post",action="/adduser")
+		input#inputUserName(type="text", placeholder="username", name="username")
+		input#inputUserEmail(type="text", placeholder="useremail", name="useremail")
+		button#btnSubmit(type="submit") submit

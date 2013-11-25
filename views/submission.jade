@@ -1,0 +1,22 @@
+form#formAddItem(class="form",name="additem",method="post",action="/")
+			input(type="hidden", name="company_id", value="#{company_id}")
+			input#inputTitle(type="text", placeholder="title", name="title")
+			input#inputContent(type="text", placeholder="content", name="content")
+			input#inputTags(type="text", placeholder="tags", name="tags")
+			input#inputDate(type="date", placeholder="MM/DD/YY", name="content_date")
+			input#inputAuthor(type="text", placeholder="Author", name="author")
+			select(name='source')
+				option(value='')
+				option(value='internal') Internal
+				option(value='external') External
+			select(name='type')
+				option(value='')
+				option(value='email') Email
+				option(value='RFP') RFP
+				option(value='memo') Memo
+				option(value='news') News
+			input#inputOrigination(type="text", placeholder="Origination", name="origination")
+			input#inputDestination(type="text", placeholder="Destination", name="destination")
+			
+			
+			button#btnSubmit(type="submit") submit

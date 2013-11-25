@@ -1,0 +1,22 @@
+doctype 5
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/normalize.css')
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		
+	body
+		header#topnav
+			div#logo
+		div(class='row fixrow')
+			div#topleftnav
+				include leftnav
+			div.wrapper
+				div#main
+					block content
+		script(type='text/javascript', src='/javascripts/jquery.js' )
+		script(type='text/javascript', src='/javascripts/foundation/foundation.js' )
+		script(type='text/javascript', src='/javascripts/foundation/foundation.reveal.js' )
+		script(type='text/javascript', src='/socket.io/socket.io.js' )
+		script(type='text/javascript', src='/javascripts/jquery.isotope.min.js' )
+		script(type='text/javascript', src='/javascripts/custom.js' )

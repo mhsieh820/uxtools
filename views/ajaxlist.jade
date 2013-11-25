@@ -1,0 +1,13 @@
+each word, i in word_count
+	if i < 5
+		li(id="#{word._id}", class="small-6") 
+			span.first #{word._id}
+			span #{word.value} hits
+	else if i == 5
+		li(id="#{word._id}", class="second reset small-6") 
+			span.first #{word._id}
+			span #{word.value} hits
+	else
+		li(id="#{word._id}", class="second small-6") 
+			span.first #{word._id}
+			span #{word.value} hits

@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	h1= title
+	each company, i in companylist
+		a(href="/company/#{company._id}")
+			div.company(id="#{company._id}")
+			= company.name
+			
+	div.company 
+		form#formAddCompany(name="addcompany",method="post",action="/addcompany")
+			h3 Add New Company
+			input#inputCompany(type="text",name="companyname")
+			button#companyBtn(type="submit") Add

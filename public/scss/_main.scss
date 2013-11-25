@@ -1,0 +1,182 @@
+body {
+	background: #555;
+}
+
+.row {
+	background: #FFF;
+}
+
+.hidden {
+	display: none;
+}
+
+#topnav {
+	height: 60px;
+	background: #414042;
+}
+
+#topleftnav {
+	padding-left: 0px;
+	width: 225px;
+	float: left;
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	background: #58595b; 
+}
+
+#logo {
+	background: url("../images/logo.png") left top no-repeat transparent;
+	float: right;
+	height: 40px;
+	width: 168px;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
+.fixrow {
+	position: relative;
+}
+
+.wrapper {
+	margin-left: 225px;	
+}
+
+.excerpt {
+	max-height: 110px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: rem-calc(12);
+	padding: 5px 0;
+}
+
+.highlight, .important {
+/* 	background-color: #FFFF88;  */
+	border: 2px solid #f7cb65;
+	padding: 2px 0;
+}
+
+.important {
+	border-color: #ea5436;
+}
+
+#main {
+	float: left;
+	width:100%;
+	
+	h2 {
+		font-size: rem-calc(14);
+		padding-left: 25px;
+		background: #f1f2f2;
+		border-top: 1px solid #e2e3e4;
+		border-bottom: 1px solid #e2e3e4;
+		border-right: 1px solid #e2e3e4;
+		padding-top: 8px;
+		padding-bottom: 8px;
+		font-weight: bold;
+		text-align: center;
+		margin-top: 0px;
+		&.title {
+			text-align: left;
+		}
+	}	
+	
+	h4 {
+		font-size: rem-calc(14);
+		text-transform: uppercase;
+		margin-top: 0px;
+		
+	}
+	
+	.padding {
+		padding: 15px 35px;
+	}
+	
+	.keyword-list {
+		li {
+			margin-left: 0px;
+			line-height: 1.2em;
+		
+			&.second {
+				margin-left: 50%;
+			}
+			
+			&.reset {
+				margin-top: -6em;
+			}
+			
+			span {
+				display: inline-block;
+				width: 50%;
+				&.first {
+					width: 50%;
+				}
+			}
+		}
+		
+		
+		
+	}
+	
+}
+
+.article {
+	border-top: 1px solid #dadbdb;
+	padding: 10px 20px;
+	.title {
+		margin-bottom: 10px;
+	.type {
+		text-transform: uppercase;
+		font-weight: bold;
+		display: inline-block;
+		margin-right: 5px;
+	}
+	
+	.date {
+		color: #bfbfbf;
+	}
+	}
+	
+	label {
+		font-weight: bold;
+		font-size: rem-calc(13);
+	}
+	
+	p {
+		margin-bottom: 0px;
+	}
+	
+}
+
+
+#leftnav {
+	background: #58595b;
+	
+	#nav {
+		color: #FFF;
+		padding: 0;
+		li {
+			list-style: none;
+			margin: 0;
+				a {
+				text-transform: uppercase;
+				padding: 10px 15px 10px 40px;
+			}
+		}
+		
+		&> li {
+			border-top: 1px solid #626366;
+		}
+		
+		.inner-nav {
+			margin-left: 0px;
+			li {
+			padding-left: 1.25rem;
+			border-top: 1px solid #626366;
+			}
+		}
+		
+	}
+	
+}
