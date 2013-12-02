@@ -39,16 +39,17 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+
+/*
 var user_id = 0;
 //socket io
 io.on('connection', function (socket) {
   socket.emit('user_id', user_id++);
   
-/*
   socket.on('submitdata', function (user_data) {
     	addToDatabase(user_data);
   });
-*/
+
   
   socket.on('submititem', function (user_data) {
   		//add item on socket.io push
@@ -57,28 +58,25 @@ io.on('connection', function (socket) {
 
   
 });
-
-
+*/
 
 app.get('/', routes.index(db));
 app.get('/company', routes.companylist(db));
-//app.get('/helloworld', routes.helloworld);
-//app.get('/users', user.list);
 app.get('/userlist', routes.userlist(db));
 app.get('/adddata', routes.adddata(db));
 app.get('/company/:id', routes.company(db));
-app.post('/pulldata', routes.pulldata(db));
-app.post('/dosearch', routes.dosearch(db));
-// add user
 
-//app.get('/newuser', routes.newuser);
+//post
 app.post('/addcompany', routes.addcompany(db));
 app.post('/company/:id', routes.company(db));
-app.post('/adddata', routes.pushdata(db))
-//geolocation
+app.post('/adddata', routes.pushdata(db));
+app.post('/pulldata', routes.pulldata(db));
+app.post('/dosearch', routes.dosearch(db));
 
+//geolocation
 app.post('/geosearch', routes.geosearch(geocoder));
 
+/*
 function addToDatabase(data)
 {
 	   // Get our form values. These rely on the "name" attributes
@@ -102,11 +100,13 @@ function addToDatabase(data)
         });
 }
 
+*/
 
 
 // Export the model
 //exports.model = monk[collection];
 
+/*
 function addItem(data)
 {
 		//console.log(data);
@@ -157,99 +157,9 @@ function addItem(data)
         });
 }
 
-
-var period = 1;
-
-function runReduce() {
-
-	//TODO: need to add time start and time end to a WHERE
-	//TODO: need to inline return
-	//TODO: return top 5-10 results only
-	//TODO: strip out non-essential tags
-	//create today
-	//create past week
-	//create past month
-	//create past year 
-	
-	mongodb.companyitem.mapReduce(mapFunction, reduceFunction, {out: "word_count_today", query: { content_date: {'$gte' : getLastDay() }}});
-	
-	mongodb.companyitem.mapReduce(mapFunction, reduceFunction, {out: "word_count_week", query: { content_date: {'$gte' : getLastWeek() }}});
-
-	mongodb.companyitem.mapReduce(mapFunction, reduceFunction, {out: "word_count_month", query: { content_date: {'$gte' : getLastMonth() }}});
-
-	mongodb.companyitem.mapReduce(mapFunction, reduceFunction, {out: "word_count_year", query: { content_date: {'$gte' : getLastYear() }}});
-
-	
-	
-}
-
-/*
-function getLastDay(){
-    var today = new Date();
-    var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
-    return lastWeek;
-}
-
-function getLastWeek(){
-    var today = new Date();
-    var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-    return lastWeek;
-}
-
-function getLastMonth(){
-    var today = new Date();
-    var lastWeek = new Date(today.getFullYear(), today.getMonth() -1 , today.getDate());
-    return lastWeek;
-}
-
-function getLastYear(){
-    var today = new Date();
-    var lastWeek = new Date(today.getFullYear() - 1, today.getMonth() , today.getDate());
-         return lastWeek;
-}
 */
 
 
-var mapFunction = function() { 
-
-    var content = this.content;
-   
-    
-    if (content) { 
-        // quick lowercase to normalize per your requirements - DONE
-        // STRIP TAGS - DONE
-        // STRIP NUMBERS - ?
-        // STRIP punctuation - DONE
-        /*
-        FROM STACKOVERFLOW
-        replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"")
-Doing the above still doesn't return the string as you have specified it. If you want to remove any extra spaces that were left over from removing crazy punctuation, then you are going to want to do something like
-replace(/\s{2,}/g," ");
-	*/
-
-	        var clean = content.toLowerCase().replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-	        var spaceclean = clean.replace(/\s{2,}/g," ");
-	        var tags = ['is', 'the', 'to', 'of', 'in', 'as', 'a', 'it', 'am', 'or', 'and', 'because', 'are', 'was', 'by', 'at', 'for', 'with', 'more', 'on', 'said', 'be', 'here', 'its', 'that', 'an', 'have', 'about', 'from', 'their', 'than', 'will', 'even', 'has', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'percent', 'billion', 'million', 'us', 'new', 'since', 'according', 'yesterday', 'bank', 'new', 'york', 'mellon', 'bny', 'if', 'who', 'year', 'after', 'she', 'our', 'we', 'before', 'which', 'where', 'who', 'he', 'there', 'any', 'not', 'been'];
-	        content = spaceclean.split(" ");
-	        
-	        for (var i = content.length - 1; i >= 0; i--) {
-	            // might want to remove punctuation, etc. here
-	            if (content[i] && tags.indexOf(content[i]) == -1) {      // make sure there's something
-	               //get tf-idf value of word
-	               var set_string = content[i];
-	               emit(set_string, 1); // store a 1 for each word
-				}
-		}
-    }
-}
-
-var reduceFunction = function( key, values ) {    
-    var count = 0;    
-    values.forEach(function(v) {            
-        count +=v;    
-    });
-    return count;
-}
 /* TODO: SEARCH BY KEYWORD
    TODO: SEARCH BY MULTIPLE KEYWORD 
    TODO: MAP POSITION OF KEYWORDS ON GMAP   
