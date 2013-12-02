@@ -11,10 +11,10 @@ var path = require('path');
 var geocoder = require('geocoder');
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/uxtools');
+var db = monk('mongodb://uxtools:uxtools@ds053728.mongolab.com:53728/heroku_app19991968');
 
 
-var mongodb = require("mongojs").connect('localhost:27017/uxtools', ['companyitem']);
+var mongodb = require("mongojs").connect('mongodb://uxtools:uxtools@ds053728.mongolab.com:53728/heroku_app19991968', ['companyitem']);
 
 var app = express();
 var server = require('http').createServer(app);
@@ -157,7 +157,7 @@ function addItem(data)
         });
 }
 
-runReduce();
+
 var period = 1;
 
 function runReduce() {
