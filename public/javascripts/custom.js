@@ -5,11 +5,12 @@ var map, pointarray, heatmap;
 $j(document).foundation();
 $j(document).ready(function () {
 	var user_id = 0;
-	var socket = io.connect('http://localhost:5000');
+	//var socket = io.connect('http://localhost:5000');
 	isotope();
 	
 	
 
+/*
 	$j("#formAddUser").submit(function (e) {
 		e.preventDefault();
 		console.log("SUBMIT FORM");
@@ -21,6 +22,7 @@ $j(document).ready(function () {
 		socket.emit('submitdata', { user_id: user_id, username: username, email : email });	
 	});
 	
+*/
 	
 /*
 	$j("#formAddItem").submit(function (e) {
@@ -88,6 +90,7 @@ $j(document).ready(function () {
 	});
 	
 	
+/*
 	socket.on('user_id', function (id) {
 		user_id = id;
 			
@@ -102,6 +105,7 @@ $j(document).ready(function () {
 		
 		add_item(data.user_id, data.data);
 	});
+*/
 	
 	function testInternalHighlight() {
 		$j("#internal-news .content").unhighlight();
