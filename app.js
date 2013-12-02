@@ -20,7 +20,7 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
-server.listen(5000);
+server.listen(process.env.PORT || 5000);
 // all environments
 app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
