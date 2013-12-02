@@ -1,0 +1,26 @@
+| <script>
+- var x = 0;
+| var latlng = { "elements" : [
+each el, i in latlng
+	- if (x == 0)
+		| {"latlng" : #{el}, "id" : "#{i}" }
+		- x = 1;
+	- else
+		| ,{"latlng" : #{el}, "id" : "#{i}" }
+| ]};
+
+- var x = 0;
+| var endlatlng = { "elements" : [
+each el, i in endlatlng
+	- if (x == 0)
+		| {"latlng" : #{el}, "id" : "#{i}" }
+		- x = 1;
+	- else
+		| ,{"latlng" : #{el}, "id" : "#{i}" }
+| ]};
+
+- var x = 0;
+| var links = [
+| #{linkmap}
+| ];
+| </script>

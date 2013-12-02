@@ -1,17 +1,14 @@
 div#leftnav
 	ul.side-nav(id="nav")
 		li
-			a(href='#') dashboard
+			a(href='/') dashboard
 		li
 			a(href='#') clients
 			ul.inner-nav
-				li
-					a(href='#') blackrock
-				li
-					a(href='#') old mutual
-				li
-					a(href='#') capital group
-				li
-					a(href='#') ameriprise
+				each company, i in companylist
+					li
+						a(href="/company/#{company._id}")
+							div.company(id="#{company._id}")
+								= company.name
 		li
-			a(href='#') alerts
+			a(href='/adddata') Add Data

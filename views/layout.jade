@@ -4,17 +4,17 @@ html
 		title= title
 		link(rel='stylesheet', href='/stylesheets/normalize.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
-		
+		script(type='text/javascript', src='/javascripts/vendor/custom.modernizer.js')
 	body
-		header#topnav
-			div#logo
 		div(class='row fixrow')
 			div#topleftnav
+				div#logo
 				include leftnav
 			div.wrapper
 				div#main
 					block content
 		script(type='text/javascript', src='/javascripts/jquery.js' )
+		script(type='text/javascript', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCawxn58St4zXLMuveAL7U6Z8ync98ryEc&sensor=false&libraries=visualization,geometry' )
 		script(type='text/javascript', src='/javascripts/foundation/foundation.js' )
 		script(type='text/javascript', src='/javascripts/foundation/foundation.reveal.js' )
 		script(type='text/javascript', src='/socket.io/socket.io.js' )

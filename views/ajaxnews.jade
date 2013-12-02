@@ -3,8 +3,8 @@ each article, i in articles
 						div.title
 							span.type #{article.type}
 							span.date #{article.content_date}
-						div.content
-							a(href='#', data-reveal-id='content_#{article._id}')
+						div.content(id='excerpt_#{article._id}')
+							a.excerpt_title(href='#', data-reveal-id='content_#{article._id}')
 								label #{article.title}
 							p.excerpt #{article.excerpt} ...
 							div(id='content_#{article._id}', class='reveal-modal', data-reveal)

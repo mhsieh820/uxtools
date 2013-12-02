@@ -1,13 +1,12 @@
 form#formAddItem(class="form",name="additem",method="post",action="/")
 			input(type="hidden", name="company_id", value="#{company_id}")
 			input#inputTitle(type="text", placeholder="title", name="title")
-			input#inputContent(type="text", placeholder="content", name="content")
+			textarea#inputContent(type="text", placeholder="content", name="content", rows="6")
 			input#inputTags(type="text", placeholder="tags", name="tags")
 			input#inputDate(type="date", placeholder="MM/DD/YY", name="content_date")
 			input#inputAuthor(type="text", placeholder="Author", name="author")
 			select(name='source')
-				option(value='')
-				option(value='internal') Internal
+				option(value='internal', selected) Internal
 				option(value='external') External
 			select(name='type')
 				option(value='')
@@ -15,8 +14,20 @@ form#formAddItem(class="form",name="additem",method="post",action="/")
 				option(value='RFP') RFP
 				option(value='memo') Memo
 				option(value='news') News
-			input#inputOrigination(type="text", placeholder="Origination", name="origination")
-			input#inputDestination(type="text", placeholder="Destination", name="destination")
-			
+			div.row
+				div.large-6.columns
+					input#inputOrigination(type="text", placeholder="Origination", name="origination")
+				div.large-6.columns
+					input#OriginationLngLat(type="text", readonly, placeholder="Longitude, Latitude")
+					input#startLat(type="hidden", name="startLat")
+					input#startLng(type="hidden", name="startLng")
+			div.row
+				div.large-6.columns
+					input#inputDestination(type="text", placeholder="Destination", name="destination")
+				div.large-6.columns
+					input#DestinationLngLat(type="text", readonly, placeholder="Longitude, Latitude")
+					input#endLat(type="hidden", name="endLat")
+					input#endLng(type="hidden", name="endLng")
+
 			
 			button#btnSubmit(type="submit") submit

@@ -8,7 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-
+var geocoder = require('geocoder');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/uxtools');
@@ -20,10 +20,9 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
-server.listen(3000);
-io.set('loglevel', 10);
+server.listen(5000);
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -62,6 +61,7 @@ io.on('connection', function (socket) {
 
 
 app.get('/', routes.index(db));
+app.get('/company', routes.companylist(db));
 //app.get('/helloworld', routes.helloworld);
 //app.get('/users', user.list);
 app.get('/userlist', routes.userlist(db));
@@ -74,6 +74,10 @@ app.post('/dosearch', routes.dosearch(db));
 //app.get('/newuser', routes.newuser);
 app.post('/addcompany', routes.addcompany(db));
 app.post('/company/:id', routes.company(db));
+
+//geolocation
+
+app.post('/geosearch', routes.geosearch(geocoder));
 
 function addToDatabase(data)
 {
@@ -138,7 +142,9 @@ function addItem(data)
             "source" : data.source,
             "type" : data.type,
             "origination" : data.origination,
+            "start_position" : { "lat" : data.startLat, "lng" : data.startLng },
             "destination" : data.destination,
+            "end_position" : { "lat" : data.endLat, "lng" : data.endLng },
             "content_date" : new Date(data.content_date)
             
         }, { safe : true}, function(err,doc) {
@@ -221,7 +227,7 @@ replace(/\s{2,}/g," ");
 
 	        var clean = content.toLowerCase().replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
 	        var spaceclean = clean.replace(/\s{2,}/g," ");
-	        var tags = ['is', 'the', 'to', 'of', 'in', 'as', 'a', 'it', 'am', 'or', 'and', 'because', 'are', 'was', 'by', 'at', 'for', 'with', 'more', 'on', 'said', 'be', 'here', 'its', 'that', 'an', 'have', 'about', 'from', 'their', 'than', 'will', 'even', 'has', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'percent', 'billion', 'million', 'us', 'new', 'since', 'according', 'yesterday', 'bank', 'new', 'york', 'mellon', 'bny', 'if', 'who', 'year', 'after', 'she', 'our', 'we', 'before'];
+	        var tags = ['is', 'the', 'to', 'of', 'in', 'as', 'a', 'it', 'am', 'or', 'and', 'because', 'are', 'was', 'by', 'at', 'for', 'with', 'more', 'on', 'said', 'be', 'here', 'its', 'that', 'an', 'have', 'about', 'from', 'their', 'than', 'will', 'even', 'has', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'percent', 'billion', 'million', 'us', 'new', 'since', 'according', 'yesterday', 'bank', 'new', 'york', 'mellon', 'bny', 'if', 'who', 'year', 'after', 'she', 'our', 'we', 'before', 'which', 'where', 'who', 'he', 'there', 'any', 'not', 'been'];
 	        content = spaceclean.split(" ");
 	        
 	        for (var i = content.length - 1; i >= 0; i--) {

@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "uxtools-bny",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "monk": "*",
     "mongodb" : "*",
     "socket.io" : "*",
-    "mongojs" : "*"
+    "mongojs" : "*",
+    "geocoder" : "*"
   }
 }

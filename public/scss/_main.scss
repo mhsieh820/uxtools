@@ -10,6 +10,11 @@ body {
 	display: none;
 }
 
+#loginform {
+	margin-top: 100px;
+	min-height: 600px;
+}
+
 #topnav {
 	height: 60px;
 	background: #414042;
@@ -27,12 +32,25 @@ body {
 }
 
 #logo {
-	background: url("../images/logo.png") left top no-repeat transparent;
+	background: url("../images/logo.png") center top no-repeat #414042;
 	float: right;
 	height: 40px;
-	width: 168px;
-	margin-top: 10px;
-	margin-right: 10px;
+	width: 100%;
+}
+
+#expand {
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	z-index: 999;
+	background: #CCC;
+	width: 30px;
+	height: 30px;
+	
+	&:hover {
+		cursor: pointer;
+		background: #111;
+	}
 }
 
 .fixrow {
@@ -62,9 +80,21 @@ body {
 	border-color: #ea5436;
 }
 
+.fullcontent {
+	min-height: 400px;
+	max-height: 400px;
+	overflow-x: auto;
+}
+
+.content-wrapper {
+	max-height: 400px;
+	overflow-x: auto;
+}
+
 #main {
 	float: left;
 	width:100%;
+	position: relative;
 	
 	h2 {
 		font-size: rem-calc(14);
@@ -78,6 +108,7 @@ body {
 		font-weight: bold;
 		text-align: center;
 		margin-top: 0px;
+		margin-bottom: 0px;
 		&.title {
 			text-align: left;
 		}
@@ -150,10 +181,20 @@ body {
 	
 }
 
+#external-news, #internal-news {
+	.article:first-child {
+		border-top: none;
+	}
+	
+}
+
+.reveal-modal .article {
+	border-top: none;
+}
 
 #leftnav {
 	background: #58595b;
-	
+	margin-top: 40px;
 	#nav {
 		color: #FFF;
 		padding: 0;
@@ -163,7 +204,11 @@ body {
 				a {
 				text-transform: uppercase;
 				padding: 10px 15px 10px 40px;
-			}
+				
+					&:hover {
+						color: #f7cb65;
+					}
+				}
 		}
 		
 		&> li {
@@ -180,4 +225,43 @@ body {
 		
 	}
 	
+}
+
+.sub-nav {
+	dd {
+		background: #f1f2f2;
+		
+		
+		
+		
+
+		a {
+			border: 1px solid #e4e4e5;
+			padding: rem-calc(3 12) !important;
+		}
+	}
+	
+	dd.active a {
+			border: 1px solid #58595b;
+			border-radius: 1px !important;
+	}	
+}
+
+
+#map-canvas {
+	height: 400px;
+	
+	img {
+		max-width: none;
+	}
+	
+	&.expanded {
+		z-index: 100;
+		position: absolute !important;
+		top: 40px;
+		right: 0px;
+		width: 100%;
+		height: 800px;
+		
+	}
 }

@@ -1,35 +1,3 @@
-var monk = require('monk');
-var collection = "companyitem";
-
-// Bind methods to the client
-monk.bind(collection, {
-
-	/**
-	 * @param string term The term to search for
-	 * @param function fn The callback function
-	 */
-	search: function(term, fn) {
-
-		// RexExp object - search for term, case insensitive
-		var regex = new RegExp(term, "i");
-
-		// "this" in this context refers to the mongoskin collection object
-		this.find({
-			"$or": [
-				{
-					"content": regex
-				},
-				{
-					"tags": regex
-				},
-				{
-					"title": regex
-				}
-			]
-		}, {}).toArray(fn);
-	}
-});
-
 /*
  * GET home page.
  */
@@ -39,8 +7,21 @@ monk.bind(collection, {
 	//get company list
 	var collection = db.get('companycollection');
 	 collection.find({},{},function(e,docs){
-            res.render('index', {
-                "title" : "Select Company",
+            res.render('login', {
+                "companylist" : docs
+            });
+        });
+	}
+  //res.render('index', { title: 'Express' });
+};
+
+exports.companylist = function(db) {
+
+	return function(req, res){
+	//get company list
+	var collection = db.get('companycollection');
+	 collection.find({},{},function(e,docs){
+            res.render('companylist', {
                 "companylist" : docs
             });
         });
@@ -52,7 +33,17 @@ exports.adddata = function(db) {
 
 	return function(req, res){
 	//get company list
-         res.render('adddata');
+		 var companycollection = db.get('companycollection');
+		 companycollection.find({},{},function(e,docs){
+		 
+		 		res.render('adddata', {
+			 			companylist: docs
+			 		}
+		 		);
+         });
+
+	
+         
 	}
   //res.render('index', { title: 'Express' });
 };
@@ -88,51 +79,120 @@ exports.addcompany = function(db)
 
 }
 
+exports.geosearch = function (geocoder) {
+	
+	 return function(req, res) {
+	 
+	 	var place = req.body.place;
+	 	
+
+		// Geocoding
+		geocoder.geocode(place, function ( err, data ) {
+		  // do something with data
+		  	if (err ) {
+			  	
+				res.send("ERROR WITH GEOCODING");  	
+		  	}
+		  	else {
+		  	var address = data.results[0].formatted_address;
+		  	var latlng = data.results[0].geometry.location;
+		  	res.json({ "latlng" : latlng, 'address' : address});
+		  	}
+		  	
+		});
+	 	
+	 
+	 }
+	
+}
+
+
 exports.company = function(db)
 {
 	 return function(req, res) {
 		 var date_set = false;
 		 if (req.body.startDate && req.body.endDate)
 		 {
-			 console.log("GOT DATES");
 			 date_set = true;
 		 }
 
-		 console.log(req.params.id);
+
 		 //get the elements within the company
 		 var collection = db.get('companyitem');
 		 var word_count = db.get('word_count_today');
 		
-		var external_content = "";
-		 
+		 var external_content = "";
+		 var companylist = "";
 		 var response = "";
-		 word_count.find({}, { limit: 10, sort: { value : -1 }}, function(e, words) {
+		 var latlng = {};
+         var linkmap = [];
+         var endlatlng = {};
+         var start_line = "";
+        collection.find({}, {}, function(e, articles) {
+	         
+	    for (var i = 0; i < articles.length; i++) {
+		if (typeof(articles[i].start_position) != "undefined")
+		{
+		 	var lat = articles[i].start_position.lat;
+		 	var lng = articles[i].start_position.lng;
+		 	start_line = "new google.maps.LatLng(" + lat + "," + lng + ")";
+			latlng[articles[i]._id] = start_line;
+		}
+		
+		if (typeof(articles[i].end_position) != "undefined")
+		 {
+			 var endlat = articles[i].end_position.lat;
+			 var endlng = articles[i].end_position.lng;
+			 var end_line = "new google.maps.LatLng(" + endlat + "," + endlng + ")";
+			 //latlng.push(end_line);
+			 endlatlng[articles[i]._id] = end_line;
+	 		 linkmap.push("[" + start_line + "," + end_line+ "]");
+		 }
+		
+		}
+			//nest
+			 word_count.find({}, { limit: 10, sort: { value : -1 }}, function(e, words) {
 			response = words;
-			 
-		 } );
-		 
-		 
-		  collection.find({ source: "external" },{
+			//nest
+			var companycollection = db.get('companycollection');
+			companycollection.find({},{ limit: 100 },function(e,docs){
+           		companylist = docs;
+         
+		   			//nest
+		   			
+		   		collection.find({ source: "external" },{
 			 	sort: { content_date: -1 }
+			 	},function(e,docs){
+			 			external_content = docs;
+			 			//nest
+			 			 collection.find({ source: "internal" },{
+				 		sort: { content_date: -1 }
 			 
 		 	},function(e,docs){
-			 	external_content = docs;
-		 })
-		 collection.find({ source: "internal" },{
-			 	sort: { content_date: -1 }
-			 
-		 	},function(e,docs){
-		 
-		 
-            res.render('company', {
-            	"path" : req.path,
-            	"company_id" : req.params.id,
-                "internal" : parse_text(docs),
-                "external" : parse_text(external_content),
-                "word_count" : response
-            });
-        });
-		 	 
+		 			console.log(linkmap);
+		 	
+		            res.render('company', {
+		            	"path" : req.path,
+		            	"companylist" : companylist,
+		            	"company_id" : req.params.id,
+		            	"linkmap" : linkmap,
+		            	"latlng" : latlng,
+		            	"endlatlng" : endlatlng,
+		                "internal" : parse_text(docs),
+		                "external" : parse_text(external_content),
+		                "word_count" : response
+					});
+				});
+
+	 		});
+   			
+   		});
+ 
+	});	
+     
+});
+	
+				 	 
 	 }
 }
 
@@ -152,6 +212,9 @@ exports.dosearch = function (db)
 	
 
 	return function(req, res) {
+		var latlng = {};
+		var endlatlng = {};
+		var linkmap = [];
 		var word = req.body.searchword;
 		var source = req.body.source;
 		/*
@@ -163,14 +226,79 @@ var collection = db.get('companyitem');
 		});
 */
 		var collection = db.get('companyitem');
-		collection.find({ source: source, content : { $regex : ".*" + word + ".*", $options : "i" }}, function(err, documents) {
+		if (source != 'both')
+		{
+		
+		
+		var searchparams = { source: source, content : { $regex : ".*" + word + ".*", $options : "i" }};
+		}
+		else
+		{
+		var searchparams = { content : { $regex : ".*" + word + ".*", $options : "i" }};	
+		}
+		
+		collection.find(searchparams, function(err, articles) {
 
 		// No error
 		if(!err) {
 			// Render the view
-			    res.render('ajaxnews', {
-			    	"articles" : parse_text(documents)
+			
+		for (var i = 0; i < articles.length; i++) {
+		if (typeof(articles[i].start_position) != "undefined")
+		{
+		 	var lat = articles[i].start_position.lat;
+		 	var lng = articles[i].start_position.lng;
+		 	start_line = "new google.maps.LatLng(" + lat + "," + lng + ")";
+			latlng[articles[i]._id] = start_line;
+		}
+		
+		if (typeof(articles[i].end_position) != "undefined")
+		 {
+			 var endlat = articles[i].end_position.lat;
+			 var endlng = articles[i].end_position.lng;
+			 var end_line = "new google.maps.LatLng(" + endlat + "," + endlng + ")";
+			 //latlng.push(end_line);
+			 endlatlng[articles[i]._id] = end_line;
+	 		 linkmap.push("[" + start_line + "," + end_line+ "]");
+		 }
+		
+		}
+			
+			res.render('ajaxmap', {
+				"linkmap" : linkmap,
+		        "latlng" : latlng,
+		        "endlatlng" : endlatlng,	
+			}, function (err, ajaxmap)
+			{
+				var internal_articles = [];
+				var external_articles = [];
+				//nest
+				for (var i = 0; i < articles.length; i++)
+				{
+					if (articles[i].source == 'internal')
+					{
+						internal_articles.push(articles[i]);
+					}
+					else
+					{
+						external_articles.push(articles[i]);
+					}
+					
+				}
+				
+				 res.render('ajaxnews', {
+			    	"articles" : parse_text(internal_articles),
+					}, function (err, internal) {
+					 res.render('ajaxnews', {
+			    	"articles" : parse_text(external_articles),
+					}, function (err, external) {
+					
+					var response = { internal : internal, external : external, map: ajaxmap }
+					res.send(response);
+					});
 				});
+			});	
+			   
 					
 		}
 		
@@ -187,33 +315,104 @@ var collection = db.get('companyitem');
 exports.pulldata = function (db)
 {
 	return function(req, res) {
+		var latlng = {};
+		var endlatlng = {};
+		var linkmap = [];
+	
 		var type = req.body.dateselection;
-		console.log(type);
+		var daterange = "";
 		if (type == 'today')
 		{
     	var word_count = db.get('word_count_today');
+    	daterange = getLastDay();
     	}
     	else if (type == 'week')
     	{
 	    var word_count = db.get('word_count_week');
+	    daterange = getLastWeek();
 	
     	}
     	else if (type == 'month')
     	{
 	    var word_count = db.get('word_count_month');
-	
+		daterange = getLastMonth();
     	}
     	else if (type == 'year')
     	{
 	    var word_count = db.get('word_count_year');
-	
+		daterange = getLastYear();
     	}
-		word_count.find({},{ limit: 10, sort: { value : -1 } },function(e,words){
-            res.render('ajaxlist', {
-                "word_count" : words
+    	
+    	var articles = get_articles(daterange, db, res);
+		var collection = db.get('companyitem');
+		collection.find({ content_date: { "$gte" : daterange } }, {}, function(e, articles) {
+	         
+	    for (var i = 0; i < articles.length; i++) {
+		if (typeof(articles[i].start_position) != "undefined")
+		{
+		 	var lat = articles[i].start_position.lat;
+		 	var lng = articles[i].start_position.lng;
+		 	start_line = "new google.maps.LatLng(" + lat + "," + lng + ")";
+			latlng[articles[i]._id] = start_line;
+		}
+		
+		if (typeof(articles[i].end_position) != "undefined")
+		 {
+			 var endlat = articles[i].end_position.lat;
+			 var endlng = articles[i].end_position.lng;
+			 var end_line = "new google.maps.LatLng(" + endlat + "," + endlng + ")";
+			 //latlng.push(end_line);
+			 endlatlng[articles[i]._id] = end_line;
+	 		 linkmap.push("[" + start_line + "," + end_line+ "]");
+		 }
+		
+		}
+		
+			res.render('ajaxmap', {
+				"linkmap" : linkmap,
+		        "latlng" : latlng,
+		        "endlatlng" : endlatlng,	
+			}, function (err, ajaxmap)
+			{
+				//nest
+			word_count.find({},{ limit: 10, sort: { value : -1 } },function(e,words){
+			
+			var internal_articles = [];
+				var external_articles = [];
+				//nest
+				for (var i = 0; i < articles.length; i++)
+				{
+					if (articles[i].source == 'internal')
+					{
+						internal_articles.push(articles[i]);
+					}
+					else
+					{
+						external_articles.push(articles[i]);
+					}
+					
+				}
+				
+				 res.render('ajaxnews', {
+			    	"articles" : parse_text(internal_articles),
+					}, function (err, internal) {
+					 res.render('ajaxnews', {
+			    	"articles" : parse_text(external_articles),
+					}, function (err, external) {
+			
+			            res.render('ajaxlist', {
+			                "word_count" : words
+			            }, function (err, html) {
+				            var response = { internal : internal, external: external, list : html, map: ajaxmap }
+				            res.send(response);
+				            });
+	            });
             });
         });
-			
+        
+     });
+		
+		});	
 	};
 };
 
@@ -232,43 +431,63 @@ function parse_text(articles)
 	
 	return articles;
 }
-/*
-map reduce on the content
 
+function get_articles(daterange, db, res)
+{
+	var collection = db.get('companyitem');
+	var response = {};
+	console.log(daterange);
+	collection.find({ source: "external", content_date: { "$gte" : daterange } },{
+			 	sort: { content_date: -1 }
+			 
+		 	},function(e,docs){
+			 	res.render('ajaxnews', {
+                "articles" : parse_text(docs),
+            }, function(err, html) {
+            	
+            	response.external = html;
+				collection.find({ source: "internal", content_date: { "$gte" : daterange } },{
+				sort: { content_date: -1 }
+			 
+		 	},function(e,docs){
+		 
+		 
+            res.render('ajaxnews', {
+                "articles" : parse_text(docs),
+            }, function (err, html) {
+	            
+	            	response.internal = html;
+	            	return response;
 
+				});
+				});
+            });
+		 });
+		 
+		
+	}
 
-*/
-
-
-
-/*
-exports.adduser = function(db) {
-    return function(req, res) {
-
-        // Get our form values. These rely on the "name" attributes
-        var userName = req.body.username;
-        var userEmail = req.body.useremail;
-
-        // Set our collection
-        var collection = db.get('usercollection');
-
-        // Submit to the DB
-        collection.insert({
-            "username" : userName,
-            "email" : userEmail
-        }, function (err, doc) {
-            if (err) {
-                // If it failed, return error
-                res.send("There was a problem adding the information to the database.");
-            }
-            else {
-                // If it worked, forward to success page
-                res.redirect("userlist");
-                // And set the header so the address bar doesn't still say /adduser
-                //res.location("userlist");
-            }
-        });
-
-    }
+function getLastDay(){
+    var today = new Date();
+    var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+    return lastWeek;
 }
-*/
+
+function getLastWeek(){
+    var today = new Date();
+    var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+    return lastWeek;
+}
+
+function getLastMonth(){
+    var today = new Date();
+    var lastWeek = new Date(today.getFullYear(), today.getMonth() -1 , today.getDate());
+    return lastWeek;
+}
+
+function getLastYear(){
+    var today = new Date();
+    var lastWeek = new Date(today.getFullYear() - 1, today.getMonth() , today.getDate());
+         return lastWeek;
+}
+
