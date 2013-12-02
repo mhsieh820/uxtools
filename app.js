@@ -74,7 +74,7 @@ app.post('/dosearch', routes.dosearch(db));
 //app.get('/newuser', routes.newuser);
 app.post('/addcompany', routes.addcompany(db));
 app.post('/company/:id', routes.company(db));
-
+app.post('/adddata', routes.pushdata(db))
 //geolocation
 
 app.post('/geosearch', routes.geosearch(geocoder));
@@ -109,7 +109,7 @@ function addToDatabase(data)
 
 function addItem(data)
 {
-		console.log(data);
+		//console.log(data);
 	   // Get our form values. These rely on the "name" attributes
 
         
@@ -133,7 +133,7 @@ function addItem(data)
         // Destination Location
         // Author
         collection.insert({
-            "user" : user_id,
+            "user" : "1",
             "title" : data.title,
             "content" : data.content,
             "company_id" : data.company_id,
@@ -151,7 +151,7 @@ function addItem(data)
         	if (err) return;
 	     	var data_id = doc._id;
 	     	runReduce(); 
-	        io.sockets.emit('item', { user_id : user_id, data_id: data_id, data: data });
+	        //io.sockets.emit('item', { user_id : user_id, data_id: data_id, data: data });
 			
 	        
         });
@@ -183,6 +183,7 @@ function runReduce() {
 	
 }
 
+/*
 function getLastDay(){
     var today = new Date();
     var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
@@ -206,6 +207,7 @@ function getLastYear(){
     var lastWeek = new Date(today.getFullYear() - 1, today.getMonth() , today.getDate());
          return lastWeek;
 }
+*/
 
 
 var mapFunction = function() { 

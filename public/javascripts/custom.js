@@ -5,7 +5,7 @@ var map, pointarray, heatmap;
 $j(document).foundation();
 $j(document).ready(function () {
 	var user_id = 0;
-	var socket = io.connect('http://localhost:3000');
+	var socket = io.connect('http://localhost:5000');
 	isotope();
 	
 	
@@ -22,6 +22,7 @@ $j(document).ready(function () {
 	});
 	
 	
+/*
 	$j("#formAddItem").submit(function (e) {
 		e.preventDefault();
 		console.log("SUBMIT ITEM");
@@ -41,6 +42,7 @@ $j(document).ready(function () {
 		
 		location.reload();
 	});
+*/
 	
 	
 	$j("#inputOrigination").blur(function () {

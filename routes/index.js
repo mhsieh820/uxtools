@@ -1,3 +1,7 @@
+var mongo = require('mongodb');
+var mongodb = require("mongojs").connect('mongodb://uxtools:uxtools@ds053728.mongolab.com:53728/heroku_app19991968', ['companyitem']);
+
+
 /*
  * GET home page.
  */
@@ -14,6 +18,7 @@
 	}
   //res.render('index', { title: 'Express' });
 };
+
 
 exports.companylist = function(db) {
 
@@ -47,6 +52,25 @@ exports.adddata = function(db) {
 	}
   //res.render('index', { title: 'Express' });
 };
+
+exports.pushdata = function(db) {
+	
+	return function(req, res){
+	
+		var data = req.body;
+		addItem(data, db);
+		
+		var companycollection = db.get('companycollection');
+		 companycollection.find({},{},function(e,docs){
+		 
+		 		res.render('adddata', {
+			 			companylist: docs
+			 		}
+		 		);
+         });
+	}
+	
+}
 
 exports.addcompany = function(db)
 {
@@ -137,16 +161,21 @@ exports.company = function(db)
 		 	var lng = articles[i].start_position.lng;
 		 	start_line = "new google.maps.LatLng(" + lat + "," + lng + ")";
 			latlng[articles[i]._id] = start_line;
-		}
+		
 		
 		if (typeof(articles[i].end_position) != "undefined")
 		 {
 			 var endlat = articles[i].end_position.lat;
 			 var endlng = articles[i].end_position.lng;
+			 
+			 if (endlat != "" && endlng != "")
+			 {
 			 var end_line = "new google.maps.LatLng(" + endlat + "," + endlng + ")";
 			 //latlng.push(end_line);
 			 endlatlng[articles[i]._id] = end_line;
 	 		 linkmap.push("[" + start_line + "," + end_line+ "]");
+	 		 }
+		 }
 		 }
 		
 		}
@@ -250,16 +279,19 @@ var collection = db.get('companyitem');
 		 	var lng = articles[i].start_position.lng;
 		 	start_line = "new google.maps.LatLng(" + lat + "," + lng + ")";
 			latlng[articles[i]._id] = start_line;
-		}
+		
 		
 		if (typeof(articles[i].end_position) != "undefined")
 		 {
 			 var endlat = articles[i].end_position.lat;
 			 var endlng = articles[i].end_position.lng;
+			 if (endlat != "" && endlng != "") {
 			 var end_line = "new google.maps.LatLng(" + endlat + "," + endlng + ")";
 			 //latlng.push(end_line);
 			 endlatlng[articles[i]._id] = end_line;
 	 		 linkmap.push("[" + start_line + "," + end_line+ "]");
+	 		 }
+		 }
 		 }
 		
 		}
@@ -354,16 +386,20 @@ exports.pulldata = function (db)
 		 	var lng = articles[i].start_position.lng;
 		 	start_line = "new google.maps.LatLng(" + lat + "," + lng + ")";
 			latlng[articles[i]._id] = start_line;
-		}
 		
+		//only have end if have beginning
 		if (typeof(articles[i].end_position) != "undefined")
 		 {
 			 var endlat = articles[i].end_position.lat;
 			 var endlng = articles[i].end_position.lng;
+			 if (endlat != "" && endlng != ""){
 			 var end_line = "new google.maps.LatLng(" + endlat + "," + endlng + ")";
 			 //latlng.push(end_line);
 			 endlatlng[articles[i]._id] = end_line;
 	 		 linkmap.push("[" + start_line + "," + end_line+ "]");
+	 		 }
+		 }
+		 
 		 }
 		
 		}
@@ -466,6 +502,82 @@ function get_articles(daterange, db, res)
 		 
 		
 	}
+	
+var period = 1;
+
+function addItem(data, db)
+{
+		//console.log(data);
+	   // Get our form values. These rely on the "name" attributes
+
+        
+        //how do you set multiple tags (maybe the tab input box)
+        var tagstring =  data.tags;
+        if (tagstring != "")
+        {
+        var tag_array = tagstring.split(",");
+		}
+		else
+		{
+		var tag_array = [];
+		}
+        // Set our collection
+        var collection = db.get('companyitem');
+		//TODO: ADD DATE
+		//TODO: ADD SOURCE (internal, external)
+		//TODO: ADD TYPE (email, rfp, note, news)
+        // Submit to the DB
+        // Origination Location
+        // Destination Location
+        // Author
+        collection.insert({
+            "user" : "1",
+            "title" : data.title,
+            "content" : data.content,
+            "company_id" : data.company_id,
+            "tags" : tag_array,
+            "author" : data.author,
+            "source" : data.source,
+            "type" : data.type,
+            "origination" : data.origination,
+            "start_position" : { "lat" : data.startLat, "lng" : data.startLng },
+            "destination" : data.destination,
+            "end_position" : { "lat" : data.endLat, "lng" : data.endLng },
+            "content_date" : new Date(data.content_date)
+            
+        }, { safe : true}, function(err,doc) {
+        	if (err) return;
+	     	var data_id = doc._id;
+	     	runReduce(); 
+	        //io.sockets.emit('item', { user_id : user_id, data_id: data_id, data: data });
+			
+	        
+        });
+}
+
+
+function runReduce() {
+
+	//TODO: need to add time start and time end to a WHERE
+	//TODO: need to inline return
+	//TODO: return top 5-10 results only
+	//TODO: strip out non-essential tags
+	//create today
+	//create past week
+	//create past month
+	//create past year 
+	
+	mongodb.companyitem.mapReduce(mapFunction, reduceFunction, {out: { replace: "word_count_today"}, query: { content_date: {'$gte' : getLastDay() }}, readPreference: "primary" });
+	
+	mongodb.companyitem.mapReduce(mapFunction, reduceFunction, {out: { replace: "word_count_week"}, query: { content_date: {'$gte' : getLastWeek() }}, readPreference: "primary"});
+
+	mongodb.companyitem.mapReduce(mapFunction, reduceFunction, {out: { replace: "word_count_month"}, query: { content_date: {'$gte' : getLastMonth() }}, readPreference: "primary"});
+
+	mongodb.companyitem.mapReduce(mapFunction, reduceFunction, {out: { replace: "word_count_year"}, query: { content_date: {'$gte' : getLastYear() }}, readPreference: "primary"});
+
+	
+	
+}
 
 function getLastDay(){
     var today = new Date();
@@ -489,5 +601,46 @@ function getLastYear(){
     var today = new Date();
     var lastWeek = new Date(today.getFullYear() - 1, today.getMonth() , today.getDate());
          return lastWeek;
+}
+
+var mapFunction = function() { 
+
+    var content = this.content;
+   
+    
+    if (content) { 
+        // quick lowercase to normalize per your requirements - DONE
+        // STRIP TAGS - DONE
+        // STRIP NUMBERS - ?
+        // STRIP punctuation - DONE
+        /*
+        FROM STACKOVERFLOW
+        replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"")
+Doing the above still doesn't return the string as you have specified it. If you want to remove any extra spaces that were left over from removing crazy punctuation, then you are going to want to do something like
+replace(/\s{2,}/g," ");
+	*/
+
+	        var clean = content.toLowerCase().replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+	        var spaceclean = clean.replace(/\s{2,}/g," ");
+	        var tags = ['is', 'the', 'to', 'of', 'in', 'as', 'a', 'it', 'am', 'or', 'and', 'because', 'are', 'was', 'by', 'at', 'for', 'with', 'more', 'on', 'said', 'be', 'here', 'its', 'that', 'an', 'have', 'about', 'from', 'their', 'than', 'will', 'even', 'has', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'percent', 'billion', 'million', 'us', 'new', 'since', 'according', 'yesterday', 'bank', 'new', 'york', 'mellon', 'bny', 'if', 'who', 'year', 'after', 'she', 'our', 'we', 'before', 'which', 'where', 'who', 'he', 'there', 'any', 'not', 'been', 'this'];
+	        content = spaceclean.split(" ");
+	        
+	        for (var i = content.length - 1; i >= 0; i--) {
+	            // might want to remove punctuation, etc. here
+	            if (content[i] && tags.indexOf(content[i]) == -1) {      // make sure there's something
+	               //get tf-idf value of word
+	               var set_string = content[i];
+	               emit(set_string, 1); // store a 1 for each word
+				}
+		}
+    }
+}
+
+var reduceFunction = function( key, values ) {    
+    var count = 0;    
+    values.forEach(function(v) {            
+        count +=v;    
+    });
+    return count;
 }
 
