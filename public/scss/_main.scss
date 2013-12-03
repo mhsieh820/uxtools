@@ -22,7 +22,7 @@ body {
 
 #topleftnav {
 	padding-left: 0px;
-	width: 225px;
+	width: 175px;
 	float: left;
 	position: absolute;
 	left: 0;
@@ -58,7 +58,7 @@ body {
 }
 
 .wrapper {
-	margin-left: 225px;	
+	margin-left: 175px;	
 }
 
 .excerpt {
@@ -81,13 +81,13 @@ body {
 }
 
 .fullcontent {
-	min-height: 400px;
-	max-height: 400px;
+	min-height: 300px;
+	max-height: 300px;
 	overflow-x: auto;
 }
 
 .content-wrapper {
-	max-height: 400px;
+	max-height: 300px;
 	overflow-x: auto;
 }
 
@@ -123,7 +123,7 @@ body {
 	}
 	
 	.padding {
-		padding: 15px 35px;
+		padding: 15px;
 	}
 	
 	.keyword-list {
@@ -156,7 +156,7 @@ body {
 
 .article {
 	border-top: 1px solid #dadbdb;
-	padding: 10px 20px;
+	padding: 5px;
 	.title {
 		margin-bottom: 10px;
 	.type {
@@ -174,6 +174,7 @@ body {
 	label {
 		font-weight: bold;
 		font-size: rem-calc(13);
+		margin-bottom: 0px;
 	}
 	
 	p {
@@ -196,6 +197,7 @@ body {
 #leftnav {
 	background: #58595b;
 	margin-top: 40px;
+	
 	#nav {
 		color: #FFF;
 		padding: 0;
@@ -204,7 +206,8 @@ body {
 			margin: 0;
 				a {
 				text-transform: uppercase;
-				padding: 10px 15px 10px 40px;
+				padding: 10px 15px 10px 15px;
+				font-size: rem-calc(12);
 				
 					&:hover {
 						color: #f7cb65;
@@ -219,7 +222,7 @@ body {
 		.inner-nav {
 			margin-left: 0px;
 			li {
-			padding-left: 1.25rem;
+			padding-left: 1.1rem;
 			border-top: 1px solid #626366;
 			}
 		}
@@ -238,7 +241,7 @@ body {
 
 		a {
 			border: 1px solid #e4e4e5;
-			padding: rem-calc(3 12) !important;
+			padding: rem-calc(3 8) !important;
 		}
 	}
 	
@@ -250,7 +253,7 @@ body {
 
 
 #map-canvas {
-	height: 400px;
+	min-height: 350px;
 	
 	img {
 		max-width: none;

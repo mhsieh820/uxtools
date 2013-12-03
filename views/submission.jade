@@ -17,14 +17,14 @@ form#formAddItem(class="form",name="additem",method="post",action="/adddata")
 				option(value='meeting') Meeting
 			div.row
 				div.large-6.columns
-					input#inputOrigination(type="text", placeholder="Origination", name="origination")
+					input#inputOrigination(type="text", placeholder="Topic Location", name="origination")
 				div.large-6.columns
 					input#OriginationLngLat(type="text", readonly, placeholder="Longitude, Latitude")
 					input#startLat(type="hidden", name="startLat")
 					input#startLng(type="hidden", name="startLng")
 			div.row
 				div.large-6.columns
-					input#inputDestination(type="text", placeholder="Destination", name="destination")
+					input#inputDestination(type="text", placeholder="Source Location", name="destination")
 				div.large-6.columns
 					input#DestinationLngLat(type="text", readonly, placeholder="Longitude, Latitude")
 					input#endLat(type="hidden", name="endLat")

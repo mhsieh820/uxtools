@@ -34,7 +34,7 @@ block content
 			div.padding
 				//create some user list	
 				dl#date-selection(class='sub-nav')
-					dd.active
+					dd
 						a(href='#', date-selection='today') past day
 					dd
 						a(href='#', date-selection='week') past week
@@ -60,8 +60,8 @@ block content
 					div#internal-search(class='row')
 						div.small-4.columns
 							select(name='first-source')
-								option(value='internal') Analyst
-								option(value='external') External
+								option(value='internal') External
+								option(value='external') Personal
 						div.small-3.columns
 							input(class='internalsearch searchinput', type='text', name='internalsearch[]')
 						div.small-3.columns
@@ -71,7 +71,7 @@ block content
 						div.small-4.columns
 							select(name='second-source')
 								option(value='external') External
-								option(value='internal') Analyst					
+								option(value='internal') Personal					
 						div.small-3.columns
 							input(class='externalsearch searchinput', type='text', name='externalsearch[]')
 						div.small-3.columns
@@ -102,7 +102,7 @@ block content
 									p.fullcontent #{article.content}
 									a.close-reveal-modal &#215;
 		li#internal-news
-			h2 ANALYST DATA
+			h2 PERSONAL DATA
 			div.padding.content-wrapper
 				each article, i in internal
 					div.large-12.columns.article

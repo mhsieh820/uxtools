@@ -379,7 +379,7 @@ function add_images(latlng, loc)
 	   }
 	  $j.each(latlng, function(i, pos) {
 	  	  
-		  console.log(pos);
+		  //console.log(pos);
 	  
 	  	 var marker = new google.maps.Marker({
 		 position: pos.latlng,
@@ -399,6 +399,8 @@ function add_images(latlng, loc)
 		 markers.push(marker);
 	 });
 }
+
+
 
 // Sets the map on all markers in the array.
 function setAllMap(map) {
@@ -421,6 +423,23 @@ function update_map() {
 		clearMarkers();
 		add_images(latlng.elements, "start");
 		add_images(endlatlng.elements, "end");
+		var combined = [];
+		$j.each(latlng.elements, function(i, pos) {
+		 	combined.push(pos.latlng);
+		});
+		
+		$j.each(endlatlng.elements, function(i, pos) {
+		 	combined.push(pos.latlng);
+		});
+		
+		var pointArray = new google.maps.MVCArray(combined);
+
+		var heatmap = new google.maps.visualization.HeatmapLayer({
+		  data: pointArray,
+		  radius: 20
+		  });
+		 heatmap.setMap(map)
+		 
 		 
 		 var lineSymbol = {
 		  path: 'M 0,-1 0,1',
@@ -458,7 +477,7 @@ function initialize() {
         };
         map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions);
-		
+		update_map();
 		//create heatmap
 		/*
 var combined = latlng.concat(endlatlng); 	
@@ -475,30 +494,6 @@ var combined = latlng.concat(endlatlng);
 
 function toggleHeatmap() {
   heatmap.setMap(heatmap.getMap() ? null : map);
-}
-
-function changeGradient() {
-  var gradient = [
-    'rgba(0, 255, 255, 0)',
-    'rgba(0, 255, 255, 1)',
-    'rgba(0, 191, 255, 1)',
-    'rgba(0, 127, 255, 1)',
-    'rgba(0, 63, 255, 1)',
-    'rgba(0, 0, 255, 1)',
-    'rgba(0, 0, 223, 1)',
-    'rgba(0, 0, 191, 1)',
-    'rgba(0, 0, 159, 1)',
-    'rgba(0, 0, 127, 1)',
-    'rgba(63, 0, 91, 1)',
-    'rgba(127, 0, 63, 1)',
-    'rgba(191, 0, 31, 1)',
-    'rgba(255, 0, 0, 1)'
-  ]
-  heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
-}
-
-function changeRadius() {
-  heatmap.set('radius', heatmap.get('radius') ? null : 20);
 }
 
 function changeOpacity() {

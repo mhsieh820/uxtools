@@ -171,7 +171,7 @@ select {
   margin-right: auto;
   margin-top: 0;
   margin-bottom: 0;
-  max-width: 85.71429rem;
+  max-width: 73.14286rem;
   *zoom: 1;
 }
 /* line 165, ../scss/foundation/components/_global.scss */
@@ -6719,7 +6719,7 @@ meta.foundation-mq-topbar {
 
   /* line 432, ../scss/foundation/components/_top-bar.scss */
   .contain-to-grid .top-bar {
-    max-width: 85.71429rem;
+    max-width: 73.14286rem;
     margin: 0 auto;
     margin-bottom: 0;
   }
@@ -7735,7 +7735,7 @@ body {
 /* line 23, ../scss/_main.scss */
 #topleftnav {
   padding-left: 0px;
-  width: 225px;
+  width: 175px;
   float: left;
   position: absolute;
   left: 0;
@@ -7775,7 +7775,7 @@ body {
 
 /* line 60, ../scss/_main.scss */
 .wrapper {
-  margin-left: 225px;
+  margin-left: 175px;
 }
 
 /* line 64, ../scss/_main.scss */
@@ -7802,14 +7802,14 @@ body {
 
 /* line 83, ../scss/_main.scss */
 .fullcontent {
-  min-height: 400px;
-  max-height: 400px;
+  min-height: 300px;
+  max-height: 300px;
   overflow-x: auto;
 }
 
 /* line 89, ../scss/_main.scss */
 .content-wrapper {
-  max-height: 400px;
+  max-height: 300px;
   overflow-x: auto;
 }
 
@@ -7847,7 +7847,7 @@ body {
 }
 /* line 125, ../scss/_main.scss */
 #main .padding {
-  padding: 15px 35px;
+  padding: 15px;
 }
 /* line 130, ../scss/_main.scss */
 #main .keyword-list li {
@@ -7875,7 +7875,7 @@ body {
 /* line 157, ../scss/_main.scss */
 .article {
   border-top: 1px solid #dadbdb;
-  padding: 10px 20px;
+  padding: 5px;
 }
 /* line 160, ../scss/_main.scss */
 .article .title {
@@ -7896,84 +7896,86 @@ body {
 .article label {
   font-weight: bold;
   font-size: 0.92857rem;
+  margin-bottom: 0px;
 }
-/* line 179, ../scss/_main.scss */
+/* line 180, ../scss/_main.scss */
 .article p {
   margin-bottom: 0px;
 }
 
-/* line 186, ../scss/_main.scss */
+/* line 187, ../scss/_main.scss */
 #external-news .article:first-child, #internal-news .article:first-child {
   border-top: none;
 }
 
-/* line 192, ../scss/_main.scss */
+/* line 193, ../scss/_main.scss */
 .reveal-modal .article {
   border-top: none;
 }
 
-/* line 196, ../scss/_main.scss */
+/* line 197, ../scss/_main.scss */
 #leftnav {
   background: #58595b;
   margin-top: 40px;
 }
-/* line 199, ../scss/_main.scss */
+/* line 201, ../scss/_main.scss */
 #leftnav #nav {
   color: #FFF;
   padding: 0;
 }
-/* line 202, ../scss/_main.scss */
+/* line 204, ../scss/_main.scss */
 #leftnav #nav li {
   list-style: none;
   margin: 0;
 }
-/* line 205, ../scss/_main.scss */
+/* line 207, ../scss/_main.scss */
 #leftnav #nav li a {
   text-transform: uppercase;
-  padding: 10px 15px 10px 40px;
+  padding: 10px 15px 10px 15px;
+  font-size: 0.85714rem;
 }
-/* line 209, ../scss/_main.scss */
+/* line 212, ../scss/_main.scss */
 #leftnav #nav li a:hover {
   color: #f7cb65;
 }
-/* line 215, ../scss/_main.scss */
+/* line 218, ../scss/_main.scss */
 #leftnav #nav > li {
   border-top: 1px solid #626366;
 }
-/* line 219, ../scss/_main.scss */
+/* line 222, ../scss/_main.scss */
 #leftnav #nav .inner-nav {
   margin-left: 0px;
 }
-/* line 221, ../scss/_main.scss */
+/* line 224, ../scss/_main.scss */
 #leftnav #nav .inner-nav li {
-  padding-left: 1.25rem;
+  padding-left: 1.1rem;
   border-top: 1px solid #626366;
 }
 
-/* line 232, ../scss/_main.scss */
+/* line 235, ../scss/_main.scss */
 .sub-nav dd {
   background: #f1f2f2;
 }
-/* line 239, ../scss/_main.scss */
+/* line 242, ../scss/_main.scss */
 .sub-nav dd a {
   border: 1px solid #e4e4e5;
-  padding: 0.21429rem 0.85714rem !important;
+  padding: 0.21429rem 0.57143rem !important;
 }
-/* line 245, ../scss/_main.scss */
+/* line 248, ../scss/_main.scss */
 .sub-nav dd.active a {
   border: 1px solid #58595b;
   border-radius: 1px !important;
 }
 
-/* line 252, ../scss/_main.scss */
-#map-canvas {
-  height: 400px;
-}
 /* line 255, ../scss/_main.scss */
+#map-canvas {
+  min-height: 350px;
+}
+/* line 258, ../scss/_main.scss */
 #map-canvas img {
   max-width: none;
 }
-/* line 259, ../scss/_main.scss */
+/* line 262, ../scss/_main.scss */
 #map-canvas.expanded {
   z-index: 100;
   position: absolute !important;

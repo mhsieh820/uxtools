@@ -198,7 +198,7 @@ exports.company = function(db)
 				 		sort: { content_date: -1 }
 			 
 		 	},function(e,docs){
-		 			console.log(linkmap);
+		 			//console.log(linkmap);
 		 	
 		            res.render('company', {
 		            	"path" : req.path,
@@ -460,7 +460,7 @@ function parse_text(articles)
 		 var excerpt = articles[i].content.substring(0, 250);	
 		 var fixdate = new Date(articles[i].content_date);
 		 
-		 console.log(excerpt);	
+		 //console.log(excerpt);	
 		articles[i].excerpt = excerpt;
 		articles[i].content_date = fixdate.getMonth() + "/" + fixdate.getDate() + "/" + fixdate.getFullYear();	
 	}
@@ -472,7 +472,7 @@ function get_articles(daterange, db, res)
 {
 	var collection = db.get('companyitem');
 	var response = {};
-	console.log(daterange);
+	//console.log(daterange);
 	collection.find({ source: "external", content_date: { "$gte" : daterange } },{
 			 	sort: { content_date: -1 }
 			 
@@ -496,12 +496,10 @@ function get_articles(daterange, db, res)
 	            	return response;
 
 				});
-				});
-            });
-		 });
-		 
-		
-	}
+			});
+        });
+	});
+}
 	
 var period = 1;
 
@@ -529,6 +527,18 @@ function addItem(data, db)
         // Submit to the DB
         // Origination Location
         // Destination Location
+        var insert_date = "";
+        if (data.content_date == "")
+        {
+	        
+	        insert_date = new Date();
+	        
+        }
+        else
+        {
+	        insert_date = new Date(data.content_date);
+        }
+        
         // Author
         collection.insert({
             "user" : "1",
@@ -543,7 +553,7 @@ function addItem(data, db)
             "start_position" : { "lat" : data.startLat, "lng" : data.startLng },
             "destination" : data.destination,
             "end_position" : { "lat" : data.endLat, "lng" : data.endLng },
-            "content_date" : new Date(data.content_date)
+            "content_date" : insert_date
             
         }, { safe : true}, function(err,doc) {
         	if (err) return;
