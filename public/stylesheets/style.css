@@ -7722,8 +7722,8 @@ body {
 
 /* line 13, ../scss/_main.scss */
 #loginform {
-  margin-top: 20px;
-  min-height: 600px;
+  margin-top: 100px;
+  height: 100%;
 }
 
 /* line 18, ../scss/_main.scss */
@@ -7817,9 +7817,10 @@ body {
 #main {
   float: left;
   width: 100%;
+  height: 100%;
   position: relative;
 }
-/* line 99, ../scss/_main.scss */
+/* line 100, ../scss/_main.scss */
 #main h2 {
   font-size: 1rem;
   padding-left: 25px;
@@ -7834,145 +7835,145 @@ body {
   margin-top: 0px;
   margin-bottom: 0px;
 }
-/* line 112, ../scss/_main.scss */
+/* line 113, ../scss/_main.scss */
 #main h2.title {
   text-align: left;
 }
-/* line 117, ../scss/_main.scss */
+/* line 118, ../scss/_main.scss */
 #main h4 {
   font-size: 1rem;
   text-transform: uppercase;
   margin-top: 0px;
 }
-/* line 124, ../scss/_main.scss */
+/* line 125, ../scss/_main.scss */
 #main .padding {
   padding: 15px 35px;
 }
-/* line 129, ../scss/_main.scss */
+/* line 130, ../scss/_main.scss */
 #main .keyword-list li {
   margin-left: 0px;
   line-height: 1.2em;
 }
-/* line 133, ../scss/_main.scss */
+/* line 134, ../scss/_main.scss */
 #main .keyword-list li.second {
   margin-left: 50%;
 }
-/* line 137, ../scss/_main.scss */
+/* line 138, ../scss/_main.scss */
 #main .keyword-list li.reset {
   margin-top: -6em;
 }
-/* line 141, ../scss/_main.scss */
+/* line 142, ../scss/_main.scss */
 #main .keyword-list li span {
   display: inline-block;
   width: 50%;
 }
-/* line 144, ../scss/_main.scss */
+/* line 145, ../scss/_main.scss */
 #main .keyword-list li span.first {
   width: 50%;
 }
 
-/* line 156, ../scss/_main.scss */
+/* line 157, ../scss/_main.scss */
 .article {
   border-top: 1px solid #dadbdb;
   padding: 10px 20px;
 }
-/* line 159, ../scss/_main.scss */
+/* line 160, ../scss/_main.scss */
 .article .title {
   margin-bottom: 10px;
 }
-/* line 161, ../scss/_main.scss */
+/* line 162, ../scss/_main.scss */
 .article .title .type {
   text-transform: uppercase;
   font-weight: bold;
   display: inline-block;
   margin-right: 5px;
 }
-/* line 168, ../scss/_main.scss */
+/* line 169, ../scss/_main.scss */
 .article .title .date {
   color: #bfbfbf;
 }
-/* line 173, ../scss/_main.scss */
+/* line 174, ../scss/_main.scss */
 .article label {
   font-weight: bold;
   font-size: 0.92857rem;
 }
-/* line 178, ../scss/_main.scss */
+/* line 179, ../scss/_main.scss */
 .article p {
   margin-bottom: 0px;
 }
 
-/* line 185, ../scss/_main.scss */
+/* line 186, ../scss/_main.scss */
 #external-news .article:first-child, #internal-news .article:first-child {
   border-top: none;
 }
 
-/* line 191, ../scss/_main.scss */
+/* line 192, ../scss/_main.scss */
 .reveal-modal .article {
   border-top: none;
 }
 
-/* line 195, ../scss/_main.scss */
+/* line 196, ../scss/_main.scss */
 #leftnav {
   background: #58595b;
   margin-top: 40px;
 }
-/* line 198, ../scss/_main.scss */
+/* line 199, ../scss/_main.scss */
 #leftnav #nav {
   color: #FFF;
   padding: 0;
 }
-/* line 201, ../scss/_main.scss */
+/* line 202, ../scss/_main.scss */
 #leftnav #nav li {
   list-style: none;
   margin: 0;
 }
-/* line 204, ../scss/_main.scss */
+/* line 205, ../scss/_main.scss */
 #leftnav #nav li a {
   text-transform: uppercase;
   padding: 10px 15px 10px 40px;
 }
-/* line 208, ../scss/_main.scss */
+/* line 209, ../scss/_main.scss */
 #leftnav #nav li a:hover {
   color: #f7cb65;
 }
-/* line 214, ../scss/_main.scss */
+/* line 215, ../scss/_main.scss */
 #leftnav #nav > li {
   border-top: 1px solid #626366;
 }
-/* line 218, ../scss/_main.scss */
+/* line 219, ../scss/_main.scss */
 #leftnav #nav .inner-nav {
   margin-left: 0px;
 }
-/* line 220, ../scss/_main.scss */
+/* line 221, ../scss/_main.scss */
 #leftnav #nav .inner-nav li {
   padding-left: 1.25rem;
   border-top: 1px solid #626366;
 }
 
-/* line 231, ../scss/_main.scss */
+/* line 232, ../scss/_main.scss */
 .sub-nav dd {
   background: #f1f2f2;
 }
-/* line 238, ../scss/_main.scss */
+/* line 239, ../scss/_main.scss */
 .sub-nav dd a {
   border: 1px solid #e4e4e5;
   padding: 0.21429rem 0.85714rem !important;
 }
-/* line 244, ../scss/_main.scss */
+/* line 245, ../scss/_main.scss */
 .sub-nav dd.active a {
   border: 1px solid #58595b;
   border-radius: 1px !important;
 }
 
-/* line 251, ../scss/_main.scss */
+/* line 252, ../scss/_main.scss */
 #map-canvas {
   height: 400px;
 }
-/* line 254, ../scss/_main.scss */
+/* line 255, ../scss/_main.scss */
 #map-canvas img {
   max-width: none;
 }
-/* line 258, ../scss/_main.scss */
+/* line 259, ../scss/_main.scss */
 #map-canvas.expanded {
   z-index: 100;
   position: absolute !important;

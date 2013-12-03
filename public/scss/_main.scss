@@ -12,7 +12,7 @@ body {
 
 #loginform {
 	margin-top: 100px;
-	min-height: 600px;
+	height: 100%;
 }
 
 #topnav {
@@ -94,6 +94,7 @@ body {
 #main {
 	float: left;
 	width:100%;
+	height: 100%;
 	position: relative;
 	
 	h2 {
