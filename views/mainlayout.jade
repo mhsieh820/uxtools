@@ -1,0 +1,19 @@
+doctype 5
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/normalize.css')
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		script(type='text/javascript', src='/javascripts/vendor/custom.modernizr.js')
+		script(type='text/javascript', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCawxn58St4zXLMuveAL7U6Z8ync98ryEc&sensor=false&libraries=visualization,geometry' )
+	body.whitebk
+		div(class='row fixrow')
+			div.large-12.columsn
+				block content
+		script(type='text/javascript', src='/javascripts/jquery.js' )
+		
+		script(type='text/javascript', src='/javascripts/foundation/foundation.js' )
+		script(type='text/javascript', src='/javascripts/foundation/foundation.reveal.js' )
+		script(type='text/javascript', src='/socket.io/socket.io.js' )
+		script(type='text/javascript', src='/javascripts/jquery.isotope.min.js' )
+		script(type='text/javascript', src='/javascripts/custom.js' )

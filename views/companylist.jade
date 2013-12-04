@@ -1,14 +1,20 @@
 extends layout
 
 block content
+	div.company 
+		form#formAddCompany(name="addcompany",method="post",action="/addcompany")
+			h3 Add New Company
+			span Company
+			input#inputCompany(type="text",name="companyname")
+			br
+			span Line of Business
+			input#inputCompany(type="text",name="lineofbusiness")
+			button#clear(type="button", class='button right light') Clear
+			button#companyBtn(type="submit", class='button right alt') Add
+
 	h1= title
 	each company, i in companylist
 		a(href="/company/#{company._id}")
 			div.company(id="#{company._id}")
-			= company.name
-			
-	div.company 
-		form#formAddCompany(name="addcompany",method="post",action="/addcompany")
-			h3 Add New Company
-			input#inputCompany(type="text",name="companyname")
-			button#companyBtn(type="submit") Add
+			= company.name	
+	

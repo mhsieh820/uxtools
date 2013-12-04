@@ -78,13 +78,20 @@ exports.addcompany = function(db)
 
         // Get our form values. These rely on the "name" attributes
         var name = req.body.companyname;
-
+		var lineofbusiness = req.body.lineofbusiness;
+		var externalfilters = req.body.externalfilters;
+		var internalfilters = req.body.internalfilters;
+		
         // Set our collection
         var collection = db.get('companycollection');
 
         // Submit to the DB
         collection.insert({
             "name" : name,
+            "lineofbusiness" : lineofbusiness,
+            "externalfilters" : externalfilters,
+            "internalfilters" : internalfilters
+            
         }, function (err, doc) {
             if (err) {
                 // If it failed, return error
@@ -450,11 +457,13 @@ exports.pulldata = function (db)
 		
 		});	
 	};
-};
+}
+
 
 
 function parse_text(articles)
 {
+	if (articles.length != 0) {
 	for (var i = 0; i < articles.length; i++) {
 
 		 var excerpt = articles[i].content.substring(0, 250);	
@@ -464,8 +473,13 @@ function parse_text(articles)
 		articles[i].excerpt = excerpt;
 		articles[i].content_date = fixdate.getMonth() + "/" + fixdate.getDate() + "/" + fixdate.getFullYear();	
 	}
-	
-	return articles;
+		return articles;
+	}
+	else
+	{
+		var arr = [];
+		return arr;
+	}
 }
 
 function get_articles(daterange, db, res)
