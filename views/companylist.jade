@@ -3,15 +3,36 @@ extends layout
 block content
 	div.company 
 		form#formAddCompany(name="addcompany",method="post",action="/addcompany")
-			h3 Add New Company
-			span Company
-			input#inputCompany(type="text",name="companyname")
-			br
-			span Line of Business
-			input#inputCompany(type="text",name="lineofbusiness")
-			button#clear(type="button", class='button right light') Clear
-			button#companyBtn(type="submit", class='button right alt') Add
-
+			div.row
+				span.large-3.columns 
+					label Company
+				span.large-9.columns
+					input#inputCompany(type="text",name="companyname")
+			div.row
+				span.large-3.columns
+					label Line of Business
+				span.large-9.columns
+					input#inputBusiness(type="text",name="lineofbusiness")
+			div.row
+				span.large-3.columns
+					label Filters for External Data
+				span.large-9.columns
+					select(name="externalfilter[]", multiple)
+						option(value="News") News
+						option(value="Report") Report
+						option(value="Finance") Finance
+			div.row
+				span.large-3.columns
+					label Filters for Internal Data
+				span.large-9.columns
+					select(name="internalfilter[]", multiple)
+						option(value="Email") Email
+						option(value="RFP") RFP
+						option(value="Memo") Memo
+						option(value="Meeting") Meeting
+			div.companybuttons.row
+				button#clear(type="button", class='button light') Clear
+				button#companyBtn(type="submit", class='button alt') Add Client
 	h1= title
 	each company, i in companylist
 		a(href="/company/#{company._id}")

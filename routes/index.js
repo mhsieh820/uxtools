@@ -11,13 +11,34 @@ var mongodb = require("mongojs").connect('mongodb://uxtools:uxtools@ds053728.mon
 	//get company list
 	var collection = db.get('companycollection');
 	 collection.find({},{},function(e,docs){
+	 		//console.log(render_business(docs));
+	 
             res.render('login', {
-                "companylist" : docs
+                "companylist" : render_business(docs)
             });
         });
 	}
   //res.render('index', { title: 'Express' });
 };
+
+function render_business(docs)
+{
+	var companies = [];
+	//console.log(docs);
+	for (var key in docs) {
+		//console.log(docs[key]);
+		var el = docs[key];
+		if (companies[el.name] == undefined)
+		{
+		companies[el.name] = new Array();
+		}
+		//push to existing json
+		companies[el.name].push({'_id': el._id, 'lineofbusiness' : el.lineofbusiness});
+	}
+
+	return companies;
+
+}
 
 
 exports.companylist = function(db) {
@@ -27,7 +48,7 @@ exports.companylist = function(db) {
 	var collection = db.get('companycollection');
 	 collection.find({},{},function(e,docs){
             res.render('companylist', {
-                "companylist" : docs
+                "companylist" : render_business(docs)
             });
         });
 	}
@@ -42,7 +63,7 @@ exports.adddata = function(db) {
 		 companycollection.find({},{},function(e,docs){
 		 
 		 		res.render('adddata', {
-			 			companylist: docs
+			 			companylist: render_business(docs)
 			 		}
 		 		);
          });
@@ -64,7 +85,7 @@ exports.pushdata = function(db) {
 		 companycollection.find({},{},function(e,docs){
 		 
 		 		res.render('adddata', {
-			 			companylist: docs
+			 			companylist: render_business(docs)
 			 		}
 		 		);
          });
@@ -79,8 +100,8 @@ exports.addcompany = function(db)
         // Get our form values. These rely on the "name" attributes
         var name = req.body.companyname;
 		var lineofbusiness = req.body.lineofbusiness;
-		var externalfilters = req.body.externalfilters;
-		var internalfilters = req.body.internalfilters;
+		var externalfilter = req.body.externalfilter;
+		var internalfilter = req.body.internalfilter;
 		
         // Set our collection
         var collection = db.get('companycollection');
@@ -89,8 +110,8 @@ exports.addcompany = function(db)
         collection.insert({
             "name" : name,
             "lineofbusiness" : lineofbusiness,
-            "externalfilters" : externalfilters,
-            "internalfilters" : internalfilters
+            "externalfilter" : externalfilter,
+            "internalfilter" : internalfilter
             
         }, function (err, doc) {
             if (err) {
@@ -146,7 +167,9 @@ exports.company = function(db)
 		 {
 			 date_set = true;
 		 }
-
+		 
+		 var current_company = req.params.id;
+		 //console.log(current_company);
 
 		 //get the elements within the company
 		 var collection = db.get('companyitem');
@@ -209,7 +232,8 @@ exports.company = function(db)
 		 	
 		            res.render('company', {
 		            	"path" : req.path,
-		            	"companylist" : companylist,
+		            	"current_company" : current_company,
+		            	"companylist" : render_business(companylist),
 		            	"company_id" : req.params.id,
 		            	"linkmap" : linkmap,
 		            	"latlng" : latlng,
@@ -471,7 +495,7 @@ function parse_text(articles)
 		 
 		 //console.log(excerpt);	
 		articles[i].excerpt = excerpt;
-		articles[i].content_date = fixdate.getMonth() + "/" + fixdate.getDate() + "/" + fixdate.getFullYear();	
+		articles[i].content_date = (fixdate.getMonth() + 1) + "/" + (fixdate.getDate()+ 1) + "/" + fixdate.getFullYear();	
 	}
 		return articles;
 	}
@@ -520,9 +544,7 @@ var period = 1;
 function addItem(data, db)
 {
 		//console.log(data);
-	   // Get our form values. These rely on the "name" attributes
-
-        
+		// Get our form values. These rely on the "name" attributes
         //how do you set multiple tags (maybe the tab input box)
         var tagstring =  data.tags;
         if (tagstring != "")
@@ -544,13 +566,11 @@ function addItem(data, db)
         var insert_date = "";
         if (data.content_date == "")
         {
-	        
-	        insert_date = new Date();
-	        
+	        insert_date = normalizeDate(new Date());
         }
         else
         {
-	        insert_date = new Date(data.content_date);
+	        insert_date = normalizeDate(new Date(data.content_date));
         }
         
         // Author
@@ -575,7 +595,6 @@ function addItem(data, db)
 	     	runReduce(); 
 	        //io.sockets.emit('item', { user_id : user_id, data_id: data_id, data: data });
 			
-	        
         });
 }
 
@@ -603,28 +622,34 @@ function runReduce() {
 	
 }
 
+function normalizeDate(today)
+{
+	var normalized = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+    return normalized;
+}
+
 function getLastDay(){
     var today = new Date();
-    var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
-    return lastWeek;
+    var lastday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+    return lastday;
 }
 
 function getLastWeek(){
     var today = new Date();
-    var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-    return lastWeek;
+    var lastweek = new Date(today.getFullYear(), today.getMonth() , today.getDate() - 7);
+    return lastweek;
 }
 
 function getLastMonth(){
     var today = new Date();
-    var lastWeek = new Date(today.getFullYear(), today.getMonth() -1 , today.getDate());
-    return lastWeek;
+    var lastmonth = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
+    return lastmonth;
 }
 
 function getLastYear(){
     var today = new Date();
-    var lastWeek = new Date(today.getFullYear() - 1, today.getMonth() , today.getDate());
-         return lastWeek;
+    var lastyear = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+    return lastyear;
 }
 
 var mapFunction = function() { 

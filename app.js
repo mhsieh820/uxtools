@@ -65,7 +65,6 @@ app.get('/company', routes.companylist(db));
 app.get('/userlist', routes.userlist(db));
 app.get('/adddata', routes.adddata(db));
 app.get('/company/:id', routes.company(db));
-
 //post
 app.post('/addcompany', routes.addcompany(db));
 app.post('/company/:id', routes.company(db));

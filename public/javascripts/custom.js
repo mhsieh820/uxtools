@@ -3,11 +3,27 @@ var lastword =  "";
 var externallastword = "";
 var map, pointarray, heatmap;
 $j(document).foundation();
+
+	if (currentcompany != "") {
+		$j("#" + currentcompany).addClass("active");
+		$j("#" + currentcompany).parents(".innernav").show();	
+	
+	}
+
+
 $j(document).ready(function () {
+
+
+
 	var user_id = 0;
 	//var socket = io.connect('http://localhost:5000');
 	isotope();
 	
+	$j("#nav .link").click(function () {
+			$j(this).parents("li").siblings("li").children(".innernav").slideUp();
+			$j(this).siblings(".innernav").slideDown();
+		
+	});
 	
 
 /*
@@ -45,7 +61,11 @@ $j(document).ready(function () {
 		location.reload();
 	});
 */
-	
+	$j("#clear-search").click(function () {
+		
+		$j("#searchform input").val('');
+		
+	});
 	
 	$j("#inputOrigination").blur(function () {
 		

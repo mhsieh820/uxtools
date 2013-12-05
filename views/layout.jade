@@ -7,9 +7,11 @@ html
 		script(type='text/javascript', src='/javascripts/vendor/custom.modernizr.js')
 		script(type='text/javascript', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCawxn58St4zXLMuveAL7U6Z8ync98ryEc&sensor=false&libraries=visualization,geometry' )
 	body
+		div#topnav
+			div.row
+				div#logo.right
 		div(class='row fixrow')
 			div#topleftnav
-				div#logo
 				include leftnav
 			div.wrapper
 				div#main

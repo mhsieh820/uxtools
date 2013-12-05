@@ -56,27 +56,26 @@ block content
 						
 				hr
 				h4 SEARCH KEYWORDS
-				form
+				form#searchform
 					div#internal-search(class='row')
-						div.small-4.columns
-							select(name='first-source')
-								option(value='internal') Personal
-								option(value='external') External
 						div.small-3.columns
+							input(name='first-source', value='internal', type='hidden')
+							label.searchlabel Personal
+						div.small-4.columns
 							input(class='internalsearch searchinput', type='text', name='internalsearch[]')
-						div.small-3.columns
+						div.small-4.columns.pull-1
 							input(class='internalsearch searchinput2', type='text', name='internalsearch[]')
-						div.small-2.columns &nbsp;
 					div#external-search(class='row')
+						div.small-3.columns
+							input(name='second-source', value='external', type='hidden')
+							label.searchlabel External					
 						div.small-4.columns
-							select(name='second-source')
-								option(value='external') External
-								option(value='internal') Personal					
-						div.small-3.columns
 							input(class='externalsearch searchinput', type='text', name='externalsearch[]')
-						div.small-3.columns
+						div.small-4.columns.pull-1
 							input(class='externalsearch searchinput2', type='text', name='externalsearch[]')
-						div.small-2.columns &nbsp;					
+					div.row
+						div.small-12.pull-1.columns#clear-search
+							a.button(href='#clear', id="clear-search") Clear					
 		li
 			h2 &nbsp;
 			div#map-canvas
@@ -98,7 +97,7 @@ block content
 									h4 #{article.title}
 									div.title
 										span.type #{article.type}
-										span.date #{article.content_date}
+										span.date span.date #{article.content_date}
 									p.fullcontent #{article.content}
 									a.close-reveal-modal &#215;
 		li#internal-news

@@ -1,14 +1,26 @@
 div#leftnav
 	ul.side-nav(id="nav")
-		li
-			a(href='/') add client
-		li
-			a(href='#') clients
-			ul.inner-nav
-				each company, i in companylist
+		li#user Martin's Clients
+		- for (var key in companylist) {
+		- var el = companylist[key]
+			li
+				a(href="#", class="link")
+					div.company
+						= key
+				ul.innernav
+					each lines in companylist[key]
+						li
+							a(href="/company/#{lines._id}")
+								div.company(id="#{lines._id}")
+									= lines.lineofbusiness
 					li
-						a(href="/company/#{company._id}")
-							div.company(id="#{company._id}")
-								= company.name
+						a(href='/adddata') Add Data
+		- }
+	ul.side-nav(id="bottomnav")	
 		li
-			a(href='/adddata') Add Data
+			a(href='/company') Add/Edit client
+		li
+			a(href='/') Log Out
+	| <script>
+	| var currentcompany = "#{current_company}";
+	| </script>

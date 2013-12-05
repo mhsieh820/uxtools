@@ -13,6 +13,7 @@
     "mongodb" : "*",
     "socket.io" : "*",
     "mongojs" : "*",
-    "geocoder" : "*"
+    "geocoder" : "*",
+    "underscore": "1.5.2"
   }
 }
