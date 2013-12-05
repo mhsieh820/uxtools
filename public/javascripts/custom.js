@@ -4,7 +4,7 @@ var externallastword = "";
 var map, pointarray, heatmap;
 $j(document).foundation();
 
-	if (currentcompany != "") {
+	if (typeof currentcompany !== 'undefined') {
 		$j("#" + currentcompany).addClass("active");
 		$j("#" + currentcompany).parents(".innernav").show();	
 	
