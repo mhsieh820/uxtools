@@ -1,7 +1,7 @@
 div#leftnav
 	ul.side-nav(id="nav")
 		li#user 
-			img.circle(src="http://placehold.it/70x70")
+			img.circle(src="/images/sales.jpg", width="70", height="70")
 			span Charles Bernstein
 		a#date-selected(href="#",data-dropdown="date-selection",data-options="is_hover:true")
 			span today
@@ -31,7 +31,7 @@ div#leftnav
 		- }
 	ul.side-nav(id="bottomnav")	
 		li
-			a(href='/') Log Out
+			a.logout(href='/') Log Out
 	| <script>
 	| var currentcompany = "#{current_company}";
 	| </script>

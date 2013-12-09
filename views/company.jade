@@ -61,35 +61,33 @@ block content
 	div#bottomcontent
 		ul(class='small-block-grid-2')
 			li
-				div.padding
-					div.tabs-content
-						div#topmatching.content.active
-							ul#keyword-list(class='keyword-list')
-								include ajaxlist
-						div#search.content
-							form#searchform
-								div#internal-search(class='row')
-									div.small-3.columns
-										input(name='first-source', value='internal', type='hidden')
-										label.searchlabel Personal
-									div.small-4.columns
-										input(class='internalsearch searchinput', type='text', name='internalsearch[]')
-									div.small-4.columns.pull-1
-										input(class='internalsearch searchinput2', type='text', name='internalsearch[]')
-								div#external-search(class='row')
-									div.small-3.columns
-										input(name='second-source', value='external', type='hidden')
-										label.searchlabel External					
-									div.small-4.columns
-										input(class='externalsearch searchinput', type='text', name='externalsearch[]')
-									div.small-4.columns.pull-1
-										input(class='externalsearch searchinput2', type='text', name='externalsearch[]')
-								div.row
-									div.small-12.pull-1.columns#clear-search
-										a.button(href='#clear', id="clear-search") Clear					
+				div.tabs-content
+					div#topmatching.content.active
+						ul#keyword-list(class='keyword-list')
+							include ajaxlist
+					div#search.content
+						form#searchform.row
+							div#internal-search(class='small-5 push-1 columns')
+								div.small-12.columns
+									input(name='first-source', value='internal', type='hidden')
+									label.searchlabel Personal
+								div.small-12.columns
+									input(class='internalsearch searchinput', type='text', name='internalsearch[]')
+								div.small-12.columns
+									input(class='internalsearch searchinput2', type='text', name='internalsearch[]')
+							div#external-search(class='small-5 push-1 columns')
+								div.small-12.columns
+									input(name='second-source', value='external', type='hidden')
+									label.searchlabel External					
+								div.small-12.columns
+									input(class='externalsearch searchinput', type='text', name='externalsearch[]')
+								div.small-12.columns
+									input(class='externalsearch searchinput2', type='text', name='externalsearch[]')
+							div.small-12.pull-1.columns#clear-search
+								a.button(href='#clear', id="clear-search") Clear					
 
-						div#related.content
-							img(src='http://placehold.it/470x250')		
+					div#related.content
+						img(src='http://placehold.it/470x250')		
 			li
 				div#map-canvas
 				div#expand
@@ -114,6 +112,7 @@ block content
 							div.content(id='excerpt_#{article._id}')
 								a.excerpt_title(href='#', data-reveal-id='content_#{article._id}')
 									label #{article.title}
+									label #{article.author}
 								p.excerpt #{article.excerpt} ...
 								div(id='content_#{article._id}', class='reveal-modal', data-reveal)
 									div.article
@@ -132,9 +131,9 @@ block content
 						li 
 							a.active RFP
 						li
-							a Memo
+							a.active Memo
 						li 
-							a Meeting
+							a.active Meeting
 				div.padding.content-wrapper
 					each article, i in internal
 						div.large-12.columns.article

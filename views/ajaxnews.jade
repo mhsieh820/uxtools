@@ -6,6 +6,7 @@ each article, i in articles
 						div.content(id='excerpt_#{article._id}')
 							a.excerpt_title(href='#', data-reveal-id='content_#{article._id}')
 								label #{article.title}
+								label #{article.author}
 							p.excerpt #{article.excerpt} ...
 							div(id='content_#{article._id}', class='reveal-modal', data-reveal)
 								div.article

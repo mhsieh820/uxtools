@@ -409,7 +409,7 @@ function add_images(latlng, loc)
          icon: image
 		 });
 		 
-		  google.maps.event.addListener(marker, 'mouseover', function() {
+		  google.maps.event.addListener(marker, 'click', function() {
 		  		var title = $j("#excerpt_" + pos.id + " .excerpt_title").html();
 		  		var content = $j("#excerpt_" + pos.id + " .excerpt").html();
 

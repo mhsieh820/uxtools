@@ -1,10 +1,10 @@
 each word, i in word_count
-	if i < 5
+	if i < 6
 		li(id="#{word._id}", class="small-6") 
 			span.first 
 				a.selectable(data-word='#{word._id}') #{word._id}
 			span #{word.value} hits
-	else if i == 5
+	else if i == 6
 		li(id="#{word._id}", class="second reset small-6")
 			span.first
 				a.selectable(data-word='#{word._id}') #{word._id}

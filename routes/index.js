@@ -224,7 +224,7 @@ exports.company = function(db)
 		
 		}
 			//nest
-			 word_count.find({}, { limit: 10, sort: { value : -1 }}, function(e, words) {
+			 word_count.find({}, { limit: 12, sort: { value : -1 }}, function(e, words) {
 			response = words;
 			//nest
 			var companycollection = db.get('companycollection');
@@ -493,7 +493,7 @@ exports.pulldata = function (db)
 			}, function (err, ajaxmap)
 			{
 				//nest
-			word_count.find({},{ limit: 10, sort: { value : -1 } },function(e,words){
+			word_count.find({},{ limit: 12, sort: { value : -1 } },function(e,words){
 			
 			var internal_articles = [];
 				var external_articles = [];
