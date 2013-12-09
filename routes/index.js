@@ -178,9 +178,11 @@ exports.company = function(db)
 		 var external_content = "";
 		 var companylist = "";
 		 var response = "";
-		 var latlng = {};
          var linkmap = [];
+         var latlng = {};
          var endlatlng = {};
+         var extlatlng = {};
+         var extendlatlng = {};
          var start_line = "";
         collection.find({}, {}, function(e, articles) {
 	         
@@ -190,8 +192,14 @@ exports.company = function(db)
 		 	var lat = articles[i].start_position.lat;
 		 	var lng = articles[i].start_position.lng;
 		 	start_line = "new google.maps.LatLng(" + lat + "," + lng + ")";
-			latlng[articles[i]._id] = start_line;
-		
+			 	if (articles[i].source == 'internal')
+		 	{
+			 	latlng[articles[i]._id] = start_line;
+		 	}
+		 	else {
+			 	extlatlng[articles[i]._id] = start_line;
+		 	}
+			
 		
 		if (typeof(articles[i].end_position) != "undefined")
 		 {
@@ -202,7 +210,13 @@ exports.company = function(db)
 			 {
 			 var end_line = "new google.maps.LatLng(" + endlat + "," + endlng + ")";
 			 //latlng.push(end_line);
-			 endlatlng[articles[i]._id] = end_line;
+			 if (articles[i].source == 'internal')
+			 	{
+				 	endlatlng[articles[i]._id] = end_line;
+			 	}
+			 	else {
+				 	extendlatlng[articles[i]._id] = end_line;
+			 	}
 	 		 linkmap.push("[" + start_line + "," + end_line+ "]");
 	 		 }
 		 }
@@ -238,6 +252,8 @@ exports.company = function(db)
 		            	"linkmap" : linkmap,
 		            	"latlng" : latlng,
 		            	"endlatlng" : endlatlng,
+		            	"extlatlng" : extlatlng,
+		            	"extendlatlng" : extendlatlng,
 		                "internal" : parse_text(docs),
 		                "external" : parse_text(external_content),
 		                "word_count" : response
@@ -274,6 +290,8 @@ exports.dosearch = function (db)
 	return function(req, res) {
 		var latlng = {};
 		var endlatlng = {};
+		var extlatlng = {};
+		var extendlatlng = {};
 		var linkmap = [];
 		var word = req.body.searchword;
 		var source = req.body.source;
@@ -309,7 +327,14 @@ var collection = db.get('companyitem');
 		 	var lat = articles[i].start_position.lat;
 		 	var lng = articles[i].start_position.lng;
 		 	start_line = "new google.maps.LatLng(" + lat + "," + lng + ")";
-			latlng[articles[i]._id] = start_line;
+		 	if (articles[i].source == 'internal')
+		 	{
+			 	latlng[articles[i]._id] = start_line;
+		 	}
+		 	else {
+			 	extlatlng[articles[i]._id] = start_line;
+		 	}
+			
 		
 		
 		if (typeof(articles[i].end_position) != "undefined")
@@ -320,6 +345,13 @@ var collection = db.get('companyitem');
 			 var end_line = "new google.maps.LatLng(" + endlat + "," + endlng + ")";
 			 //latlng.push(end_line);
 			 endlatlng[articles[i]._id] = end_line;
+			 if (articles[i].source == 'internal')
+			 	{
+				 	endlatlng[articles[i]._id] = end_line;
+			 	}
+			 	else {
+				 	extendlatlng[articles[i]._id] = end_line;
+			 	}
 	 		 linkmap.push("[" + start_line + "," + end_line+ "]");
 	 		 }
 		 }
@@ -330,7 +362,9 @@ var collection = db.get('companyitem');
 			res.render('ajaxmap', {
 				"linkmap" : linkmap,
 		        "latlng" : latlng,
-		        "endlatlng" : endlatlng,	
+		        "endlatlng" : endlatlng,
+		        "extlatlng" : extlatlng,
+		        "extendlatlng" : extendlatlng,	
 			}, function (err, ajaxmap)
 			{
 				var internal_articles = [];
@@ -380,6 +414,8 @@ exports.pulldata = function (db)
 	return function(req, res) {
 		var latlng = {};
 		var endlatlng = {};
+		var extlatlng = {};
+		var extendlatlng = {};
 		var linkmap = [];
 	
 		var type = req.body.dateselection;
@@ -416,7 +452,14 @@ exports.pulldata = function (db)
 		 	var lat = articles[i].start_position.lat;
 		 	var lng = articles[i].start_position.lng;
 		 	start_line = "new google.maps.LatLng(" + lat + "," + lng + ")";
-			latlng[articles[i]._id] = start_line;
+			if (articles[i].source == 'internal')
+		 	{
+			 	latlng[articles[i]._id] = start_line;
+		 	}
+		 	else {
+			 	extlatlng[articles[i]._id] = start_line;
+		 	}
+
 		
 		//only have end if have beginning
 		if (typeof(articles[i].end_position) != "undefined")
@@ -426,7 +469,13 @@ exports.pulldata = function (db)
 			 if (endlat != "" && endlng != ""){
 			 var end_line = "new google.maps.LatLng(" + endlat + "," + endlng + ")";
 			 //latlng.push(end_line);
-			 endlatlng[articles[i]._id] = end_line;
+			 if (articles[i].source == 'internal')
+			 	{
+				 	endlatlng[articles[i]._id] = end_line;
+			 	}
+			 	else {
+				 	extendlatlng[articles[i]._id] = end_line;
+			 	}
 	 		 linkmap.push("[" + start_line + "," + end_line+ "]");
 	 		 }
 		 }
@@ -439,6 +488,8 @@ exports.pulldata = function (db)
 				"linkmap" : linkmap,
 		        "latlng" : latlng,
 		        "endlatlng" : endlatlng,	
+		        "extlatlng" : extlatlng,
+		        "extendlatlng" : extendlatlng,	
 			}, function (err, ajaxmap)
 			{
 				//nest

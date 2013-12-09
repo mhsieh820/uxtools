@@ -22,101 +22,134 @@ block content
 			- else
 				| ,{"latlng" : #{el}, "id" : "#{i}" }
 		| ]};
+
+		- var x = 0;
+		| var extlatlng = { "elements" : [
+		each el, i in extlatlng
+			- if (x == 0)
+				| {"latlng" : #{el}, "id" : "#{i}" }
+				- x = 1;
+			- else
+				| ,{"latlng" : #{el}, "id" : "#{i}" }
+		| ]};
+
+		- var x = 0;
+		| var extendlatlng = { "elements" : [
+		each el, i in extendlatlng
+			- if (x == 0)
+				| {"latlng" : #{el}, "id" : "#{i}" }
+				- x = 1;
+			- else
+				| ,{"latlng" : #{el}, "id" : "#{i}" }
+		| ]};
 		
 		- var x = 0;
 		| var links = [
 		| #{linkmap}
 		| ];
 		| </script>
-	ul(class='small-block-grid-2')
-		li
-			h2.title KEYWORDS
-			div.padding
-				//create some user list	
-				dl#date-selection(class='sub-nav')
-					dd
-						a(href='#', date-selection='today') past day
-					dd
-						a(href='#', date-selection='week') past week
-					dd
-						a(href='#', date-selection='month') past month
-					dd
-						a(href='#', date-selection='year') past year
-					dd
-						a(href='#') custom
-				div.hidden
-					form#formChangeDate(class="form",name="changeDate",method="post",action="#{path}")
-						input#startDate(class="small-6", type="date", name="startDate")
-						input#endDate(class="small-6", type="date", name="endDate")
-						button#btnDateSubmit(type="submit") submit	
-				hr
-				h4 TOP MATCHING KEYWORDS
-				ol#keyword-list(class='keyword-list')
-					include ajaxlist
-						
-				hr
-				h4 SEARCH KEYWORDS
-				form#searchform
-					div#internal-search(class='row')
-						div.small-3.columns
-							input(name='first-source', value='internal', type='hidden')
-							label.searchlabel Personal
-						div.small-4.columns
-							input(class='internalsearch searchinput', type='text', name='internalsearch[]')
-						div.small-4.columns.pull-1
-							input(class='internalsearch searchinput2', type='text', name='internalsearch[]')
-					div#external-search(class='row')
-						div.small-3.columns
-							input(name='second-source', value='external', type='hidden')
-							label.searchlabel External					
-						div.small-4.columns
-							input(class='externalsearch searchinput', type='text', name='externalsearch[]')
-						div.small-4.columns.pull-1
-							input(class='externalsearch searchinput2', type='text', name='externalsearch[]')
-					div.row
-						div.small-12.pull-1.columns#clear-search
-							a.button(href='#clear', id="clear-search") Clear					
-		li
-			h2 &nbsp;
-			div#map-canvas
-			div#expand
-		li#external-news
-			h2 EXTERNAL RESOURCES
-			div.padding.content-wrapper
-				each article, i in external
-					div.large-12.columns.article
-						div.title
-							span.type #{article.type}
-							span.date #{article.content_date}
-						div.content(id='excerpt_#{article._id}')
-							a.excerpt_title(href='#', data-reveal-id='content_#{article._id}')
-								label #{article.title}
-							p.excerpt #{article.excerpt} ...
-							div(id='content_#{article._id}', class='reveal-modal', data-reveal)
-								div.article
-									h4 #{article.title}
-									div.title
-										span.type #{article.type}
-										span.date span.date #{article.content_date}
-									p.fullcontent #{article.content}
-									a.close-reveal-modal &#215;
-		li#internal-news
-			h2 PERSONAL DATA
-			div.padding.content-wrapper
-				each article, i in internal
-					div.large-12.columns.article
-						div.title
-							span.type #{article.type}
-							span.date #{article.content_date}
-						div.content(id='excerpt_#{article._id}')
-							a.excerpt_title(href='#', data-reveal-id='content_#{article._id}')
-								label #{article.title}
-							p.excerpt #{article.excerpt} ...
-							div(id='content_#{article._id}', class='reveal-modal', data-reveal)
-								div.article
-									h4 #{article.title}
-									div.title
-										span.type #{article.type}
-										span.date #{article.content_date}
-									p.fullcontent #{article.content}
-									a.close-reveal-modal &#215;
+	div#topcontent
+		div.small-6.columns &nbsp;
+		div.small-6.columns
+			dl.tabs(data-tab)
+				dd.active
+					a(href='#topmatching') Top Matching
+				dd
+					a(href='#search') Search
+				dd
+					a(href='#related') Related
+	div#bottomcontent
+		ul(class='small-block-grid-2')
+			li
+				div.padding
+					div.tabs-content
+						div#topmatching.content.active
+							ul#keyword-list(class='keyword-list')
+								include ajaxlist
+						div#search.content
+							form#searchform
+								div#internal-search(class='row')
+									div.small-3.columns
+										input(name='first-source', value='internal', type='hidden')
+										label.searchlabel Personal
+									div.small-4.columns
+										input(class='internalsearch searchinput', type='text', name='internalsearch[]')
+									div.small-4.columns.pull-1
+										input(class='internalsearch searchinput2', type='text', name='internalsearch[]')
+								div#external-search(class='row')
+									div.small-3.columns
+										input(name='second-source', value='external', type='hidden')
+										label.searchlabel External					
+									div.small-4.columns
+										input(class='externalsearch searchinput', type='text', name='externalsearch[]')
+									div.small-4.columns.pull-1
+										input(class='externalsearch searchinput2', type='text', name='externalsearch[]')
+								div.row
+									div.small-12.pull-1.columns#clear-search
+										a.button(href='#clear', id="clear-search") Clear					
+
+						div#related.content
+							img(src='http://placehold.it/470x250')		
+			li
+				div#map-canvas
+				div#expand
+			li#external-news
+				h2.first EXTERNAL RESOURCES
+				div.filters
+					ul
+						li 
+							a.active Bloomberg
+						li 
+							a.active Financial Times
+						li
+							a WSJ
+						li 
+							a SNL.com
+				div.padding.content-wrapper
+					each article, i in external
+						div.large-12.columns.article
+							div.title
+								span.type #{article.type}
+								span.date #{article.content_date}
+							div.content(id='excerpt_#{article._id}')
+								a.excerpt_title(href='#', data-reveal-id='content_#{article._id}')
+									label #{article.title}
+								p.excerpt #{article.excerpt} ...
+								div(id='content_#{article._id}', class='reveal-modal', data-reveal)
+									div.article
+										h4 #{article.title}
+										div.title
+											span.type #{article.type}
+											span.date #{article.content_date}
+										p.fullcontent #{article.content}
+										a.close-reveal-modal &#215;
+			li#internal-news
+				h2 PERSONAL DATA
+				div.filters
+					ul
+						li 
+							a.active Email
+						li 
+							a.active RFP
+						li
+							a Memo
+						li 
+							a Meeting
+				div.padding.content-wrapper
+					each article, i in internal
+						div.large-12.columns.article
+							div.title
+								span.type #{article.type}
+								span.date #{article.content_date}
+							div.content(id='excerpt_#{article._id}')
+								a.excerpt_title(href='#', data-reveal-id='content_#{article._id}')
+									label #{article.title}
+								p.excerpt #{article.excerpt} ...
+								div(id='content_#{article._id}', class='reveal-modal', data-reveal)
+									div.article
+										h4 #{article.title}
+										div.title
+											span.type #{article.type}
+											span.date #{article.content_date}
+										p.fullcontent #{article.content}
+										a.close-reveal-modal &#215;

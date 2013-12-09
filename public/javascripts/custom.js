@@ -5,9 +5,7 @@ var map, pointarray, heatmap;
 $j(document).foundation();
 
 	if (typeof currentcompany !== 'undefined') {
-		$j("#" + currentcompany).addClass("active");
-		$j("#" + currentcompany).parents(".innernav").show();	
-	
+		$j("#" + currentcompany).parent("a").addClass("active");	
 	}
 
 
@@ -19,11 +17,13 @@ $j(document).ready(function () {
 	//var socket = io.connect('http://localhost:5000');
 	isotope();
 	
+/*
 	$j("#nav .link").click(function () {
 			$j(this).parents("li").siblings("li").children(".innernav").slideUp();
 			$j(this).siblings(".innernav").slideDown();
 		
 	});
+*/
 	
 
 /*
@@ -319,6 +319,7 @@ $j.get( '/pulldata',parameters, function(data) {
 	
 	$j("#date-selection").on("click", "a", function() {
 		$j("#date-selection dd").removeClass('active');
+		var datetext = $j(this).html();
 		var dateselection = $j(this).attr("date-selection"); 
 		$j(this).parent("dd").addClass("active");
 		$j.post(
@@ -327,6 +328,7 @@ $j.get( '/pulldata',parameters, function(data) {
 			function(data, status)
 			{
 				//console.log(data.map);
+				$j("#date-selected span").html(datetext);
 				$j("#scriptinsert").html(data.map);
 				update_map();
 				$j("#keyword-list").stop().fadeOut('fast', 'swing', function () {
@@ -393,7 +395,7 @@ function add_images(latlng, loc)
 	    size: new google.maps.Size(15, 15),
 	    // The origin for this image is 0,0.
 	    origin: new google.maps.Point(0,0),
-	    anchor: new google.maps.Point(3.5, 3.5)
+	    anchor: new google.maps.Point(7.5, 7.5)
 	  };
 
 	   }
@@ -442,7 +444,9 @@ function clearMarkers() {
 function update_map() {
 		clearMarkers();
 		add_images(latlng.elements, "start");
-		add_images(endlatlng.elements, "end");
+		add_images(endlatlng.elements, "start");
+		add_images(extlatlng.elements, "end");
+		add_images(extendlatlng.elements, "end");
 		var combined = [];
 		$j.each(latlng.elements, function(i, pos) {
 		 	combined.push(pos.latlng);

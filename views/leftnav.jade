@@ -1,6 +1,21 @@
 div#leftnav
 	ul.side-nav(id="nav")
-		li#user Martin's Clients
+		li#user 
+			img.circle(src="http://placehold.it/70x70")
+			span Charles Bernstein
+		a#date-selected(href="#",data-dropdown="date-selection",data-options="is_hover:true")
+			span today
+		ul#date-selection.f-dropdown(data-dropdown-content)
+			li
+				a(href='#', date-selection='today') today
+			li
+				a(href='#', date-selection='week') past week
+			li
+				a(href='#', date-selection='month') past month
+			li
+				a(href='#', date-selection='year') past year
+		li 
+			a.clients(href='/company') Clients		
 		- for (var key in companylist) {
 		- var el = companylist[key]
 			li
@@ -11,14 +26,10 @@ div#leftnav
 					each lines in companylist[key]
 						li
 							a(href="/company/#{lines._id}")
-								div.company(id="#{lines._id}")
+								div.lineofbusiness(id="#{lines._id}")
 									= lines.lineofbusiness
-					li
-						a(href='/adddata') Add Data
 		- }
 	ul.side-nav(id="bottomnav")	
-		li
-			a(href='/company') Add/Edit client
 		li
 			a(href='/') Log Out
 	| <script>
