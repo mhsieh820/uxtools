@@ -375,6 +375,7 @@ var infowindow = new google.maps.InfoWindow({
 var count = 1;
 var markers = [];
 var lines = [];
+var heatmap;
 function add_images(latlng, loc)
 {
 		if (loc == 'start')
@@ -433,6 +434,7 @@ function setAllMap(map) {
   for (var i = 0; i < lines.length; i++) {
     lines[i].setMap(map);
   }
+
 }
 
 // Removes the markers from the map, but keeps them in the array.
@@ -442,6 +444,8 @@ function clearMarkers() {
 
 
 function update_map() {
+		
+		
 		clearMarkers();
 		add_images(latlng.elements, "start");
 		add_images(endlatlng.elements, "start");
@@ -456,9 +460,17 @@ function update_map() {
 		 	combined.push(pos.latlng);
 		});
 		
+		$j.each(extendlatlng.elements, function(i, pos) {
+		 	combined.push(pos.latlng);
+		});
+		
+		$j.each(extlatlng.elements, function(i, pos) {
+		 	combined.push(pos.latlng);
+		});
+		
 		var pointArray = new google.maps.MVCArray(combined);
 
-		var heatmap = new google.maps.visualization.HeatmapLayer({
+		heatmap = new google.maps.visualization.HeatmapLayer({
 		  data: pointArray,
 		  radius: 20
 		  });
@@ -501,6 +513,8 @@ function initialize() {
         };
         map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions);
+            
+        
 		update_map();
 		//create heatmap
 		/*
