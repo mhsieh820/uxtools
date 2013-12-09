@@ -7874,7 +7874,7 @@ p {
 
 /* line 192, ../scss/_main.scss */
 .content-wrapper {
-  min-height: 300px;
+  min-height: 350px;
   max-height: 350px;
   overflow-x: auto;
   border-collapse: collapse;
