@@ -67,14 +67,6 @@ block content
 							include ajaxlist
 					div#search.content
 						form#searchform.row
-							div#internal-search(class='small-5 push-1 columns')
-								div.small-12.columns
-									input(name='first-source', value='internal', type='hidden')
-									label.searchlabel Personal
-								div.small-12.columns
-									input(class='internalsearch searchinput', type='text', name='internalsearch[]')
-								div.small-12.columns
-									input(class='internalsearch searchinput2', type='text', name='internalsearch[]')
 							div#external-search(class='small-5 push-1 columns')
 								div.small-12.columns
 									input(name='second-source', value='external', type='hidden')
@@ -83,6 +75,14 @@ block content
 									input(class='externalsearch searchinput', type='text', name='externalsearch[]')
 								div.small-12.columns
 									input(class='externalsearch searchinput2', type='text', name='externalsearch[]')
+							div#internal-search(class='small-5 push-1 columns')
+								div.small-12.columns
+									input(name='first-source', value='internal', type='hidden')
+									label.searchlabel Internal
+								div.small-12.columns
+									input(class='internalsearch searchinput', type='text', name='internalsearch[]')
+								div.small-12.columns
+									input(class='internalsearch searchinput2', type='text', name='internalsearch[]')
 							div.small-12.pull-1.columns#clear-search
 								a.button(href='#clear', id="clear-search") Clear					
 
@@ -123,7 +123,7 @@ block content
 										p.fullcontent #{article.content}
 										a.close-reveal-modal &#215;
 			li#internal-news
-				h2 PERSONAL DATA
+				h2 INTERNAL DATA
 				div.filters
 					ul
 						li 
