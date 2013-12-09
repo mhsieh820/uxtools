@@ -675,7 +675,7 @@ function runReduce() {
 
 function normalizeDate(today)
 {
-	var normalized = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+	var normalized = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     return normalized;
 }
 
