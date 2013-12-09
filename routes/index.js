@@ -184,7 +184,8 @@ exports.company = function(db)
          var extlatlng = {};
          var extendlatlng = {};
          var start_line = "";
-        collection.find({}, {}, function(e, articles) {
+         var daterange = getLastDay();
+         collection.find({content_date: { "$gte" : daterange }}, {}, function(e, articles) {
 	         
 	    for (var i = 0; i < articles.length; i++) {
 		if (typeof(articles[i].start_position) != "undefined")
@@ -233,12 +234,12 @@ exports.company = function(db)
          
 		   			//nest
 		   			
-		   		collection.find({ source: "external" },{
+		   		collection.find({ source: "external", content_date: { "$gte" : daterange } },{
 			 	sort: { content_date: -1 }
 			 	},function(e,docs){
 			 			external_content = docs;
 			 			//nest
-			 			 collection.find({ source: "internal" },{
+			 			 collection.find({ source: "internal", content_date: { "$gte" : daterange } },{
 				 		sort: { content_date: -1 }
 			 
 		 	},function(e,docs){
