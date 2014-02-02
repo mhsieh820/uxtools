@@ -1,7 +1,6 @@
 var mongo = require('mongodb');
 var mongodb = require("mongojs").connect('mongodb://uxtools:uxtools@ds053728.mongolab.com:53728/heroku_app19991968', ['companyitem']);
 
-
 /*
  * GET home page.
  */
